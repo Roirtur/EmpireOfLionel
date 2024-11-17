@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="20" alignment="CENTER" styleClass="vbox" stylesheets="@css/menu.css">
+    <Label text="Empire of Lionel" styleClass="title-label"/>
+    <Button text="Start Game" styleClass="menu-button"/>
+    <Button text="Settings" styleClass="menu-button"/>
+    <Button text="Exit" styleClass="menu-button"/>
+</VBox>
