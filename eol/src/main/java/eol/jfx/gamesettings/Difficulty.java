@@ -1,4 +1,4 @@
-package eol.jfx.managers;
+package eol.jfx.gamesettings;
 
 public enum Difficulty {
     EASY,

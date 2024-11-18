@@ -20,14 +20,8 @@ public class PlayerInventory {
         return instance;
     }
 
-
-
     // We set here the inventory of the player, with the quantity of each ressource in a dictionary
     private static final java.util.HashMap<Ressource, Integer> inventory = new java.util.HashMap<>();
-
-    public static java.util.HashMap<Ressource, Integer> getInventory() {
-        return inventory;
-    }
 
     public static void productRessource(Ressource ressource) {
         productRessource(ressource, 1);
@@ -53,5 +47,16 @@ public class PlayerInventory {
             inventory.put(ressource, inventory.get(ressource) - quantity);
         }
     }
+
+    public static int getRessourceQuantity(Ressource ressource) {
+        return inventory.getOrDefault(ressource, 0);
+    }
+
+    public static void setRessourceQuantity(Ressource ressource, int quantity) {
+        inventory.put(ressource, quantity);
+    }
     
+    public static void clear() {
+        inventory.clear();
+    }
 }

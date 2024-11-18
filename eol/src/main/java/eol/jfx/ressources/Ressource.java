@@ -10,5 +10,7 @@ public enum Ressource {
     STEEL,
     CEMENT,
     LUMBER,
-    TOOLS
+    TOOLS,
+    RESIDENTS,
+    WORKERS,
 }

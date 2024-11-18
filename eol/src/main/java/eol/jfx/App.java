@@ -2,6 +2,10 @@ package eol.jfx;
 
 import java.io.IOException;
 
+import eol.jfx.gamesettings.Difficulty;
+import eol.jfx.ressources.InventoryInitiator;
+import eol.jfx.ressources.PlayerInventory;
+import eol.jfx.ressources.Ressource;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,8 +35,19 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
+    private static void initiateInventory() {
+        InventoryInitiator.initializeInventory(Difficulty.EASY);
+
+        for (Ressource ressource : Ressource.values()) {
+            System.out.println(ressource + ": " + PlayerInventory.getRessourceQuantity(ressource));
+        }
+    }
+
     public static void main(String[] args) {
         launch();
+
+        // Temporary code to test
+        initiateInventory();
     }
 
 }
