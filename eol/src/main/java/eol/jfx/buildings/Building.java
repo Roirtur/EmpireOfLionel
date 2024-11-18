@@ -28,11 +28,13 @@ public abstract class Building {
     private int upgrades = 0;
     private int maxUpgrades = 3;
 
-    private HashMap<Ressource, Integer> upgradeCost = new HashMap<>(){{
-        put(Ressource.WOOD, 10);
-        put(Ressource.STONE, 10);
-        put(Ressource.IRON, 3);
-    }};
+    private HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
+        {
+            put(Ressource.WOOD, 10);
+            put(Ressource.STONE, 10);
+            put(Ressource.IRON, 3);
+        }
+    };
 
     public Building(int x, int y, int width, int height, int maxResidents, int maxWorkers, int constructionTime, HashMap<Ressource, Integer> constructionCost) {
         this.x = x;
@@ -56,10 +58,12 @@ public abstract class Building {
         // Check if the building is buildable
 
         // Check if the player has enough ressources
-        boolean enoughRessources = PlayerInventory.hasEnoughRessources(constructionCost);
+        boolean enoughRessources
+                = PlayerInventory.hasEnoughRessources(constructionCost);
 
         // Check if the building is in a valid position
-        // TODO: Implement this method so that it do not overlap with other buildings
+        // TODO: Implement this method so that it do not overlap with other
+        // buildings
         boolean validPosition = true;
 
         return enoughRessources && validPosition;
@@ -73,9 +77,12 @@ public abstract class Building {
         }
 
         // Remove the ressources from the player inventory
-        PlayerInventory.useRessources(constructionCost);
+        for (Ressource ressource : constructionCost.keySet()) {
+            PlayerInventory.useRessource(ressource, constructionCost.get(ressource));
+        }
 
-        System.out.println("Building is being built... (waiting " + constructionTime + " seconds)");
+        System.out.println("Building is being built... (waiting "
+                + constructionTime + " seconds)");
         new Thread(() -> {
             try {
                 Thread.sleep(constructionTime * 1000);
@@ -84,6 +91,8 @@ public abstract class Building {
             }
             System.out.println("Building is built!");
 
+            // Remove the ressources from the player inventory
+            PlayerInventory.useRessources(constructionCost);
             // Set the building as built
             isBuilt = true;
         }).start();
@@ -109,7 +118,6 @@ public abstract class Building {
         currentResidents += quantity;
 
         return 0;
-
     }
 
     public int addWorkers(int quantity) {
@@ -127,16 +135,10 @@ public abstract class Building {
 
             return quantity - remainingWorkers;
         }
-
         // Add the workers
         currentWorkers += quantity;
 
         return 0;
-    }
-
-    public Work getWorkerType() {
-        // Return the type of worker that can work in this building
-        return workertype;
     }
 
     public void upgradeBuilding(UpgradeType type) {
@@ -174,6 +176,44 @@ public abstract class Building {
                 this.maxWorkers += 5;
                 break;
         }
+    }
+
+    public Work getWorkerType() {
+        // Return the type of worker that can work in this building
+        return workertype;
+    }
+
+    public void consumeResources() {
+        // Check if the building is built
+        if (!isBuilt) {
+            // Throw an exception
+            throw new IllegalArgumentException("The building is not built yet");
+        }
+
+        // Check if the building has enough ressources
+        if (!PlayerInventory.hasEnoughRessources(constructionCost)) {
+            // Throw an exception
+            throw new IllegalArgumentException("The building does not have enough "
+                    + "ressources");
+        }
+
+        // Remove the ressources from the player inventory
+        for (Ressource ressource : constructionCost.keySet()) {
+            PlayerInventory.useRessource(ressource, constructionCost.get(ressource));
+        }
+    }
+
+    public void produceResources() {
+        // Check if the building is built
+        if (!isBuilt) {
+            // Throw an exception
+            throw new IllegalArgumentException("The building is not built yet");
+        }
+
+        int ressourcesProduced = currentWorkers;
+        PlayerInventory.productRessource(Ressource.WOOD, ressourcesProduced);
+        System.out.println(" resources produced by the building at (" + x + ", "
+                + y + ")");
     }
 
     public void printBuilding() {
