@@ -12,8 +12,7 @@ public class InventoryInitiator {
         for (Ressource ressource : Ressource.values()) {
             PlayerInventory.setRessourceQuantity(ressource, 0);
         }
-
-        PlayerInventory.setRessourceQuantity(Ressource.RESIDENTS, 5);
+        
         // Depending on difficulty, add more resources
         switch (difficulty) {
             case EASY:
