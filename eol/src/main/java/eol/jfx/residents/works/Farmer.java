@@ -12,6 +12,7 @@ public class Farmer extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Farm at the fields
 
         // When the work is done, generate income

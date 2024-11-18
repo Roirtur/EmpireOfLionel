@@ -12,6 +12,7 @@ public class Miner extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Mine at the Quarry
 
         // When the work is done, generate income

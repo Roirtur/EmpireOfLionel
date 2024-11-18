@@ -12,6 +12,7 @@ public class Woodworkers extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Go take wood from the woodencabin, and come back
         // TODO Take away ressources from the player inventory when taking them
 

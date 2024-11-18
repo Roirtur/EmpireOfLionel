@@ -59,4 +59,13 @@ public class PlayerInventory {
     public static void clear() {
         inventory.clear();
     }
+
+    public static boolean hasEnoughRessources(java.util.HashMap<Ressource, Integer> ressources) {
+        for (Ressource ressource : ressources.keySet()) {
+            if (!inventory.containsKey(ressource) || inventory.get(ressource) < ressources.get(ressource)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

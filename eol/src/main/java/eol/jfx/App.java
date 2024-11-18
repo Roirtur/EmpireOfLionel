@@ -2,7 +2,10 @@ package eol.jfx;
 
 import java.io.IOException;
 
+import eol.jfx.buildings.Building;
+import eol.jfx.buildings.Farm;
 import eol.jfx.gamesettings.Difficulty;
+import eol.jfx.residents.Resident;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
@@ -11,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 
 /**
  * JavaFX App
@@ -44,10 +48,23 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        // launch();
 
         // Temporary code to test
         initiateInventory();
+
+        // Create a new Farmer
+        Resident farmer = new Resident(0,0);
+        // Create a new Farm
+        Building farm = new Farm(0,0);
+        farm.printBuilding();
+        Building farm2 = new Farm(0,0);
+        farm2.printBuilding();
+
+        // Assign the farmer to the farm
+        farmer.giveTool();
+        farmer.setWorkplace(farm);
+        farmer.print();
     }
 
 }

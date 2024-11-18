@@ -12,6 +12,7 @@ public class Lumberjack extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Go cut trees at the forest
 
         // When the work is done, generate income

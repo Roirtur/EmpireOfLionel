@@ -12,6 +12,7 @@ public class CementProductor extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Go take stone and coal from the quarry, and come back
         // TODO Take away ressources from the player inventory when taking them
 

@@ -11,6 +11,7 @@ public class ToolMaker extends Work {
 
     @Override
     public void work() {
+        isWorking = true;
         // TODO Go take steel from the SteelMill, and coal from the CoalMine, and come back
         // TODO Take away ressources from the player inventory when taking them
 
