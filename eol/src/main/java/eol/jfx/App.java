@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import eol.jfx.buildings.Building;
 import eol.jfx.buildings.Farm;
+import eol.jfx.buildings.House;
 import eol.jfx.gamesettings.Difficulty;
 import eol.jfx.residents.Resident;
 import eol.jfx.ressources.InventoryInitiator;
@@ -58,8 +59,8 @@ public class App extends Application {
         // Create a new Farm
         Building farm = new Farm(0,0);
         farm.printBuilding();
-        Building farm2 = new Farm(0,0);
-        farm2.printBuilding();
+        Building house = new House(0,0);
+        house.printBuilding();
 
         new Thread(() -> {
             while(!farm.isBuilt) {
@@ -73,7 +74,16 @@ public class App extends Application {
             // Assign the farmer to the farm
             farmer.giveTool();
             farmer.setWorkplace(farm);
-            farmer.setHouse(farm2);
+
+            while(!house.isBuilt) {
+                try {
+                    System.out.println("Waiting for the house to be built...");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    System.err.println("Thread was interrupted!");
+                }
+            }
+            farmer.setHouse(house);
             farmer.print();
         }).start();
     }
