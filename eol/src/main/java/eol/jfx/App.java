@@ -61,10 +61,21 @@ public class App extends Application {
         Building farm2 = new Farm(0,0);
         farm2.printBuilding();
 
-        // Assign the farmer to the farm
-        farmer.giveTool();
-        farmer.setWorkplace(farm);
-        farmer.print();
+        new Thread(() -> {
+            while(!farm.isBuilt) {
+                try {
+                    System.out.println("Waiting for the farm to be built...");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    System.err.println("Thread was interrupted!");
+                }
+            }
+            // Assign the farmer to the farm
+            farmer.giveTool();
+            farmer.setWorkplace(farm);
+            farmer.setHouse(farm2);
+            farmer.print();
+        }).start();
     }
 
 }

@@ -2,6 +2,8 @@ package eol.jfx.residents;
 
 import eol.jfx.buildings.Building;
 import eol.jfx.residents.works.Work;
+import eol.jfx.ressources.PlayerInventory;
+import eol.jfx.ressources.Ressource;
 
 public class Resident {
     private int age;
@@ -27,7 +29,16 @@ public class Resident {
     }
 
     public void setHouse(Building house) {
+        if (house == null) {
+            this.house = null;
+            return;
+        }
+
         this.house = house;
+        if (this.house.addResident(1) > 0) {
+            this.house = null;
+            throw new IllegalStateException("The house is full");
+        }
     }
 
     public void setWorkplace(Building workplace) {
@@ -41,10 +52,23 @@ public class Resident {
         }
 
         this.workplace = workplace;
+        if (this.workplace.addWorkers(1) > 0) {
+            this.workplace = null;
+            throw new IllegalStateException("The workplace is full");
+        }
         this.work = workplace.getWorkerType();
     }
 
     public void giveTool() {
+        if (hasTool) {
+            throw new IllegalStateException("The resident already has a tool");
+        }
+
+        if (PlayerInventory.getRessourceQuantity(Ressource.TOOLS) <= 0) {
+            throw new IllegalStateException("The player does not have any tools");
+        }
+
+        PlayerInventory.useRessource(Ressource.TOOLS);
         this.hasTool = true;
     }
 

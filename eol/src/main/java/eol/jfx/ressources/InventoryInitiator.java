@@ -12,13 +12,14 @@ public class InventoryInitiator {
         for (Ressource ressource : Ressource.values()) {
             PlayerInventory.setRessourceQuantity(ressource, 0);
         }
-        
+
         // Depending on difficulty, add more resources
         switch (difficulty) {
             case EASY:
                 PlayerInventory.setRessourceQuantity(Ressource.FOOD, 100);
                 PlayerInventory.setRessourceQuantity(Ressource.WOOD, 100);
                 PlayerInventory.setRessourceQuantity(Ressource.STONE, 100);
+                PlayerInventory.setRessourceQuantity(Ressource.TOOLS, 50);
                 break;
             case MEDIUM:
                 PlayerInventory.setRessourceQuantity(Ressource.FOOD, 50);

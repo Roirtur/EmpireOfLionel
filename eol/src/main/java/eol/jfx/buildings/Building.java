@@ -21,7 +21,7 @@ public abstract class Building {
     private final HashMap<Ressource, Integer> constructionCost;
     private final int constructionTime;
 
-    private boolean isBuilt = false;
+    public boolean isBuilt = false;
 
     private Work workertype;
 
