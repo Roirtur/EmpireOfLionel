@@ -4,11 +4,11 @@ import eol.jfx.residents.works.*;
 import eol.jfx.ressources.Ressource;
 import java.util.HashMap;
 
-public class AppartmentBuilding extends Building {
+public class ApartmentBuilding extends Building {
 
   private final Work workertype = null;
 
-  public AppartmentBuilding(int x, int y) {
+  public ApartmentBuilding(int x, int y) {
     super(x, y, 3, 2, 60, 0, 6, new HashMap<Ressource, Integer>() {
       {
         put(Ressource.WOOD, 50);
