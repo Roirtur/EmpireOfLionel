@@ -11,4 +11,6 @@ public enum Ressource {
     CEMENT,
     LUMBER,
     TOOLS,
+    RESIDENTS,
+    MAXRESIDENTS
 }

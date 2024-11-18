@@ -19,10 +19,18 @@ public class Resident {
     public int x, y;
 
     public Resident(int x, int y) {
+        // Test if enough player ressources
+        if (PlayerInventory.getRessourceQuantity(Ressource.RESIDENTS) + 1 > PlayerInventory.getRessourceQuantity(Ressource.MAXRESIDENTS)) {
+            throw new IllegalStateException("Not enough ressources to create a resident");
+        }
+
+        PlayerInventory.productRessource(Ressource.RESIDENTS);
+
         this.age = 0;
         this.hunger = 100;
         this.isAlive = true;
         this.hasTool = false;
+
 
         this.x = x;
         this.y = y;

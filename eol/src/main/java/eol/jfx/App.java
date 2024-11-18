@@ -54,8 +54,6 @@ public class App extends Application {
         // Temporary code to test
         initiateInventory();
 
-        // Create a new Farmer
-        Resident farmer = new Resident(0,0);
         // Create a new Farm
         Building farm = new Farm(0,0);
         farm.printBuilding();
@@ -71,9 +69,6 @@ public class App extends Application {
                     System.err.println("Thread was interrupted!");
                 }
             }
-            // Assign the farmer to the farm
-            farmer.giveTool();
-            farmer.setWorkplace(farm);
 
             while(!house.isBuilt) {
                 try {
@@ -83,6 +78,11 @@ public class App extends Application {
                     System.err.println("Thread was interrupted!");
                 }
             }
+            // Create a new Farmer
+            Resident farmer = new Resident(0,0);
+            // Assign the farmer to the farm
+            farmer.giveTool();
+            farmer.setWorkplace(farm);
             farmer.setHouse(house);
             farmer.print();
         }).start();

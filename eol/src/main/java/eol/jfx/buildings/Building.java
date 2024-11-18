@@ -31,6 +31,8 @@ public abstract class Building {
         this.width = width;
         this.height = height;
         this.maxResidents = maxResidents;
+        PlayerInventory.productRessource(Ressource.MAXRESIDENTS, maxResidents);
+        
         this.currentResidents = 0;
         this.maxWorkers = maxWorkers;
         this.currentWorkers = 0;
