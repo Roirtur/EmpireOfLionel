@@ -1,32 +1,42 @@
 .vbox {
+    background-color: #161616;
     -fx-background-color: #161616;
+    padding: 50px;
     -fx-padding: 50px;
 }
 
 .title-label {
+    font-size: 36px;
     -fx-font-size: 36px;
     -fx-text-fill: #6A5ACD;
+    font-weight: bold;
     -fx-font-weight: bold;
 }
 
 .menu-button {
+    font-size: 18px;
     -fx-font-size: 18px;
     -fx-text-fill: #FFFFFF;
+    background-color: #7B68EE;
     -fx-background-color: #7B68EE;
+    padding: 10px 20px;
     -fx-padding: 10px 20px;
+    border-radius: 5px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    min-width: 200px;
     -fx-min-width: 200px;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.5, 0, 0);
+    transition: all 0.3s ease;
     -fx-transition: all 0.3s ease;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.5, 0, 0);
 }
 
 .menu-button:hover {
+    background-color: #9370DB;
     -fx-background-color: #9370DB;
-    -fx-transform: scale(1.05);
 }
 
 .menu-button:pressed {
+    background-color: #6A5ACD;
     -fx-background-color: #6A5ACD;
-    -fx-transform: scale(0.95);
 }
