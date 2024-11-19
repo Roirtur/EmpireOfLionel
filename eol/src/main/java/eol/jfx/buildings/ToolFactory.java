@@ -2,13 +2,14 @@ package eol.jfx.buildings;
 
 import java.util.HashMap;
 
-import eol.jfx.residents.works.ToolMaker;
-import eol.jfx.residents.works.Work;
+import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.Ressource;
 
 public class ToolFactory extends Building {
 
-    private final Work workertype = new ToolMaker();
+    private final WorkType workertype = WorkType.TOOLMAKER;
+
+    public final static BuildingType TYPE = BuildingType.TOOLFACTORY;
 
     public ToolFactory(int x, int y) {
         super(x, y, 4, 3, 0, 12, 8, new HashMap<Ressource, Integer>() {
@@ -20,7 +21,7 @@ public class ToolFactory extends Building {
     }
 
     @Override
-    public Work getWorkerType() {
+    public WorkType getWorkerType() {
         return workertype;
     }
 

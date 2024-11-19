@@ -1,4 +1,4 @@
-package eol.jfx.gamesettings;
+package eol.jfx.managers;
 
 import eol.jfx.buildings.Building;
 
@@ -48,14 +48,14 @@ public class Map {
         return true;
     }
 
-    public static void placeBuilding(Building building, int x, int y) {
+    public static boolean placeBuilding(Building building, int x, int y) {
 
         int buildingWidth = building.getWidth();
         int buildingHeight = building.getHeight();
 
         if (!canPlaceBuilding(buildingWidth, buildingHeight, x, y)) {
-            throw new IllegalArgumentException(
-                    "Cannot place building at this position");
+            System.out.println("Can't place building at " + x + ", " + y);
+            return false;
         }
 
         for (int i = x; i < x + buildingWidth; i++) {
@@ -63,6 +63,8 @@ public class Map {
                 grid[j][i] = true;
             }
         }
+
+        return true;
     }
 
     public static void removeBuilding(Building building) {

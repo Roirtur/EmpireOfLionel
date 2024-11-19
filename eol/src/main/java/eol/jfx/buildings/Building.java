@@ -2,10 +2,10 @@ package eol.jfx.buildings;
 
 import java.util.HashMap;
 
-import eol.jfx.gamesettings.Map;
-import eol.jfx.residents.works.Work;
+import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.PlayerInventory;
-import eol.jfx.ressources.Ressource;;
+import eol.jfx.ressources.Ressource;
+;
 
 public abstract class Building {
 
@@ -24,7 +24,7 @@ public abstract class Building {
 
     public boolean isBuilt = false;
 
-    private Work workertype;
+    private WorkType workertype;
 
     private int upgrades = 0;
     private final int maxUpgrades = 3;
@@ -76,8 +76,6 @@ public abstract class Building {
             throw new IllegalArgumentException("The building is not buildable");
         }
 
-        Map.placeBuilding(this, x, y);
-
         // Remove the ressources from the player inventory
         PlayerInventory.useRessources(constructionCost);
 
@@ -100,7 +98,6 @@ public abstract class Building {
 
     public void remove() {
         // Remove the building
-        Map.removeBuilding(this);
     }
 
     public int getWidth() {
@@ -203,7 +200,7 @@ public abstract class Building {
         }
     }
 
-    public Work getWorkerType() {
+    public WorkType getWorkerType() {
         // Return the type of worker that can work in this building
         return workertype;
     }

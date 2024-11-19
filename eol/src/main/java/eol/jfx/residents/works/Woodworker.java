@@ -4,7 +4,7 @@ import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
 import eol.jfx.ressources.TimeProductionForRessource;
 
-public class Woodworkers extends Work {
+public class Woodworker extends Work {
 
   @Override
   public String toString() {

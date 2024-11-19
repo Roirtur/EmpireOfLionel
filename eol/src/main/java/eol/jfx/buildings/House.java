@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class House extends Building {
 
-  private final Work workertype = null;
+  private final WorkType workertype = null;
 
   public House(int x, int y) {
     super(x, y, 2, 2, 4, 0, 4, new HashMap<Ressource, Integer>() {
@@ -18,7 +18,7 @@ public class House extends Building {
   }
 
   @Override
-  public Work getWorkerType() {
+  public WorkType getWorkerType() {
     return workertype;
   }
 }

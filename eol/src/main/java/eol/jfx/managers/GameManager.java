@@ -1,23 +1,23 @@
-package eol.jfx.gamesettings;
+package eol.jfx.managers;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import eol.jfx.buildings.Building;
+import eol.jfx.buildings.BuildingFactory;
+import eol.jfx.buildings.BuildingType;
 import eol.jfx.residents.Resident;
 
 public class GameManager {
 
-    private List<Building> buildings;
-    private List<Resident> residents;
+    private final static List<Building> buildings = new ArrayList<>();
+    private final List<Resident> residents = new ArrayList<>();
 
     // The single instance of the class
     private static volatile GameManager instance;
 
     // Private constructor to prevent instantiation
     private GameManager() {
-        buildings = new ArrayList<>();
-        residents = new ArrayList<>();
     }
 
     // Public method to provide access to the single instance
@@ -34,7 +34,14 @@ public class GameManager {
         return localInstance;
     }
 
-    public void addBuilding(Building building) {
+    public static void addBuilding(BuildingType type, int x, int y) {
+        // TODO
+        Building building = BuildingFactory.createBuilding(type, x, y);
+
+        if (!Map.placeBuilding(building, x, y)) {
+            throw new IllegalStateException("Can't place building at " + x + ", " + y);
+        }
+
         buildings.add(building);
     }
 

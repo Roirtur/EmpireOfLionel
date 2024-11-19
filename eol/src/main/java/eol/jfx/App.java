@@ -2,13 +2,10 @@ package eol.jfx;
 
 import java.io.IOException;
 
-import eol.jfx.buildings.Building;
-import eol.jfx.buildings.Farm;
-import eol.jfx.buildings.House;
-import eol.jfx.buildings.LumberMill;
+import eol.jfx.buildings.BuildingType;
 import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.gamesettings.Map;
-import eol.jfx.residents.Resident;
+import eol.jfx.gamesettings.*;
+import eol.jfx.managers.*;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import javafx.application.Application;
@@ -50,59 +47,62 @@ public class App extends Application {
     PlayerInventory.print();
 
     // Create a new Farm
-    Building farm = new Farm(0, 0);
-    Building woodcabbin = new LumberMill(6, 6);
-    farm.printBuilding();
-    Building house = new House(3, 3);
-    house.printBuilding();
+    // Building farm = new Farm(0, 0);
+    // Building woodcabbin = new LumberMill(6, 6);
+    // farm.printBuilding();
+    // Building house = new House(3, 3);
+    // house.printBuilding();
 
-    new Thread(() -> {
-      while (!farm.isBuilt) {
-        try {
-          System.out.println("Waiting for the farm to be built...");
-          Thread.sleep(500);
-        } catch (InterruptedException e) {
-          System.err.println("Thread was interrupted!");
-        }
-      }
+    // new Thread(() -> {
+    //   while (!farm.isBuilt) {
+    //     try {
+    //       System.out.println("Waiting for the farm to be built...");
+    //       Thread.sleep(500);
+    //     } catch (InterruptedException e) {
+    //       System.err.println("Thread was interrupted!");
+    //     }
+    //   }
 
-      while (!house.isBuilt) {
-        try {
-          System.out.println("Waiting for the house to be built...");
-          Thread.sleep(500);
-        } catch (InterruptedException e) {
-          System.err.println("Thread was interrupted!");
-        }
-      }
-      while (!woodcabbin.isBuilt) {
-        try {
-          System.out.println("Waiting for the lumber to be built...");
-          Thread.sleep(500);
-        } catch (InterruptedException e) {
-          System.err.println("Thread was interrupted!");
-        }
-      }
-      // Create a new Farmer
-      Resident farmer = new Resident(0, 0);
-      Resident woodcutter = new Resident(0, 0);
-      // Assign the farmer to the farm
-      farmer.giveTool();
-      farmer.setWorkplace(farm);
-      farmer.setHouse(house);
-      farmer.print();
+    //   while (!house.isBuilt) {
+    //     try {
+    //       System.out.println("Waiting for the house to be built...");
+    //       Thread.sleep(500);
+    //     } catch (InterruptedException e) {
+    //       System.err.println("Thread was interrupted!");
+    //     }
+    //   }
+    //   while (!woodcabbin.isBuilt) {
+    //     try {
+    //       System.out.println("Waiting for the lumber to be built...");
+    //       Thread.sleep(500);
+    //     } catch (InterruptedException e) {
+    //       System.err.println("Thread was interrupted!");
+    //     }
+    //   }
+    //   // Create a new Farmer
+    //   Resident farmer = new Resident(0, 0);
+    //   Resident woodcutter = new Resident(0, 0);
+    //   // Assign the farmer to the farm
+    //   farmer.giveTool();
+    //   farmer.setWorkplace(farm);
+    //   farmer.setHouse(house);
+    //   farmer.print();
 
-      woodcutter.giveTool();
-      woodcutter.setWorkplace(woodcabbin);
-      woodcutter.setHouse(house);
+    //   woodcutter.giveTool();
+    //   woodcutter.setWorkplace(woodcabbin);
+    //   woodcutter.setHouse(house);
 
-      PlayerInventory.print();
+    //   PlayerInventory.print();
 
-      woodcutter.update();
-      woodcutter.print();
+    //   woodcutter.update();
+    //   woodcutter.print();
 
-      Map.printGrid();
+    //   Map.printGrid();
 
-      PlayerInventory.print();
-    }).start();
+    //   PlayerInventory.print();
+    // }).start();
+
+    GameManager.addBuilding(BuildingType.APARTMENT, 0, 0);
+    Map.printGrid();
   }
 }

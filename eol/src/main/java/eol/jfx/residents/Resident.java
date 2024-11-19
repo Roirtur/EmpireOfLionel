@@ -1,10 +1,12 @@
 package eol.jfx.residents;
 
+import java.util.List;
+
 import eol.jfx.buildings.Building;
 import eol.jfx.residents.works.Work;
+import eol.jfx.residents.works.WorkFactory;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import java.util.List;
 
 public class Resident {
   private int age;
@@ -77,7 +79,7 @@ public class Resident {
       this.workplace = null;
       throw new IllegalStateException("The workplace is full");
     }
-    this.work = workplace.getWorkerType();
+    this.work = WorkFactory.createWork(workplace.getWorkerType());
   }
 
   public void giveTool() {

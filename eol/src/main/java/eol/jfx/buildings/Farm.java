@@ -2,12 +2,14 @@ package eol.jfx.buildings;
 
 import java.util.HashMap;
 
+import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.Ressource;
-import eol.jfx.residents.works.*;
 
 public class Farm extends Building {
 
-    private final Work workertype = new Farmer();
+    private final WorkType workertype = WorkType.FARMER;
+
+    public final static BuildingType TYPE = BuildingType.FARM;
 
     public Farm(int x, int y) {
         super(x, y, 3, 3, 5, 3, 2, new HashMap<Ressource, Integer>() {
@@ -19,7 +21,7 @@ public class Farm extends Building {
     }
 
     @Override
-    public Work getWorkerType() {
+    public WorkType getWorkerType() {
         return workertype;
     }
 
