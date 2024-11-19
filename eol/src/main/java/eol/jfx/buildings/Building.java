@@ -86,6 +86,10 @@ public abstract class Building {
     }).start();
   }
 
+  public int getWidth() { return width; }
+
+  public int getHeight() { return height; }
+
   public int addResident(int quantity) {
     // Check if the building is built
     if (!isBuilt) {
