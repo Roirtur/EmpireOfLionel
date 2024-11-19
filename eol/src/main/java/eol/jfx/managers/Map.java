@@ -75,17 +75,19 @@ public class Map {
 
         for (int i = x; i < x + buildingWidth; i++) {
             for (int j = y; j < y + buildingHeight; j++) {
-                grid[i][j] = false;
+                grid[j][i] = false;
             }
         }
     }
 
     public static void printGrid() {
+        System.out.println("--- Grid ---");
         for (int i = 0; i < HEIGHT; i++) {
             for (int j = 0; j < WIDTH; j++) {
-                System.out.print(grid[i][j] ? "X" : "O");
+                System.out.print(grid[i][j] ? "X " : "O ");
             }
             System.out.println();
         }
+        System.out.println("------------");
     }
 }

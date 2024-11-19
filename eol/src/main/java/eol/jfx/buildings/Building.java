@@ -5,12 +5,15 @@ import java.util.HashMap;
 import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
+
 ;
 
 public abstract class Building {
 
     private final int x, y;
     private final int width, height;
+
+    private boolean exists = true;
 
     private int maxResidents;
     public int currentResidents;
@@ -28,6 +31,8 @@ public abstract class Building {
 
     private int upgrades = 0;
     private final int maxUpgrades = 3;
+
+    private Thread thread;
 
     private final HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
         {
@@ -65,7 +70,6 @@ public abstract class Building {
                 = PlayerInventory.hasEnoughRessources(constructionCost);
 
         // Position check is handled by Map
-
         return enoughRessources;
     }
 
@@ -76,28 +80,29 @@ public abstract class Building {
             throw new IllegalArgumentException("The building is not buildable");
         }
 
-        // Remove the ressources from the player inventory
-        PlayerInventory.useRessources(constructionCost);
-
+        useRessources(constructionCost);
         System.out.println("Building is being built... (waiting "
                 + constructionTime + " seconds)");
-        new Thread(() -> {
+        thread = new Thread(() -> {
             try {
                 Thread.sleep(constructionTime * 1000);
+                System.out.println("Building is built!" + exists);
+
+                // Set the building as built
+                isBuilt = true;
             } catch (InterruptedException e) {
                 System.err.println("Thread was interrupted!");
             }
-            System.out.println("Building is built!");
+        });
 
-            // Remove the ressources from the player inventory
-            PlayerInventory.useRessources(constructionCost);
-            // Set the building as built
-            isBuilt = true;
-        }).start();
+        thread.start();
     }
 
     public void remove() {
         // Remove the building
+        exists = false;
+        // TODO do things only if exists on other functions
+        thread.interrupt();
     }
 
     public int getWidth() {
@@ -174,16 +179,8 @@ public abstract class Building {
                     "The building is already at max level");
         }
 
-        // Check if the player has enough ressources
-        if (!PlayerInventory.hasEnoughRessources(upgradeCost)) {
-            // Throw an exception
-            throw new IllegalArgumentException(
-                    "The player does not have enough ressources to upgrade the "
-                    + "building");
-        }
-
         // Remove the ressources from the player inventory
-        PlayerInventory.useRessources(upgradeCost);
+        useRessources(upgradeCost);
         upgrades++;
 
         // Upgrade the building
@@ -211,5 +208,23 @@ public abstract class Building {
         System.out.println("Size: " + width + "x" + height);
         System.out.println("Residents: " + currentResidents + "/" + maxResidents);
         System.out.println("Workers: " + currentWorkers + "/" + maxWorkers);
+    }
+
+    private void useRessources(HashMap<Ressource, Integer> ressources) {
+        if (!exists) {
+            // Throw an exception
+            throw new IllegalArgumentException("The building does not exist");
+        }
+
+        // Check if the player has enough ressources
+        if (!PlayerInventory.hasEnoughRessources(upgradeCost)) {
+            // Throw an exception
+            throw new IllegalArgumentException(
+                    "The player does not have enough ressources to upgrade the "
+                    + "building");
+        }
+
+        // Remove the ressources from the player inventory
+        PlayerInventory.useRessources(ressources);
     }
 }

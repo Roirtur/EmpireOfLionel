@@ -35,7 +35,6 @@ public class GameManager {
     }
 
     public static void addBuilding(BuildingType type, int x, int y) {
-        // TODO
         Building building = BuildingFactory.createBuilding(type, x, y);
 
         if (!Map.placeBuilding(building, x, y)) {
@@ -45,8 +44,21 @@ public class GameManager {
         buildings.add(building);
     }
 
-    public void removeBuilding(Building building) {
+    public static void removeBuilding(int x, int y) {
+        // Find the building at the given coordinates (checking size and position)
+        Building building = null;
+        for (Building b : buildings) {
+            if (x >= b.getX() && x < b.getX() + b.getWidth() && y >= b.getY() && y < b.getY() + b.getHeight()) {
+                building = b;
+                break;
+            }
+        }
+        if (building == null) {
+            throw new IllegalStateException("No building found at " + x + ", " + y);
+        }
         buildings.remove(building);
+        Map.removeBuilding(building);
+        building.remove();
     }
 
     public void addResident(Resident resident) {

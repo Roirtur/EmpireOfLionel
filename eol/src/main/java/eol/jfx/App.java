@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.gamesettings.*;
-import eol.jfx.managers.*;
+import eol.jfx.managers.GameManager;
+import eol.jfx.managers.Map;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import javafx.application.Application;
@@ -102,7 +102,15 @@ public class App extends Application {
     //   PlayerInventory.print();
     // }).start();
 
-    GameManager.addBuilding(BuildingType.APARTMENT, 0, 0);
+    GameManager.addBuilding(BuildingType.APARTMENT, 3, 3);
+    GameManager.addBuilding(BuildingType.APARTMENT, 3, 1);
+    GameManager.addBuilding(BuildingType.APARTMENT, 3, 5);
+    GameManager.addBuilding(BuildingType.APARTMENT, 3, 7);
+
+    GameManager.addBuilding(BuildingType.APARTMENT, 0, 3);
+    GameManager.addBuilding(BuildingType.APARTMENT, 6, 3);
+    Map.printGrid();
+    GameManager.removeBuilding(4, 4);
     Map.printGrid();
   }
 }
