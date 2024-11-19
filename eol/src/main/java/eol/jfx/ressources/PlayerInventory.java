@@ -48,6 +48,12 @@ public class PlayerInventory {
         }
     }
 
+    public static void useRessources(java.util.HashMap<Ressource, Integer> ressources) {
+        for (Ressource ressource : ressources.keySet()) {
+            useRessource(ressource, ressources.get(ressource));
+        }
+    }
+
     public static int getRessourceQuantity(Ressource ressource) {
         return inventory.getOrDefault(ressource, 0);
     }
