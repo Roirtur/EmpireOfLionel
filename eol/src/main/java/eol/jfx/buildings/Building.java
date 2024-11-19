@@ -79,9 +79,7 @@ public abstract class Building {
         Map.placeBuilding(this, x, y);
 
         // Remove the ressources from the player inventory
-        for (Ressource ressource : constructionCost.keySet()) {
-            PlayerInventory.useRessource(ressource, constructionCost.get(ressource));
-        }
+        PlayerInventory.useRessources(constructionCost);
 
         System.out.println("Building is being built... (waiting "
                 + constructionTime + " seconds)");
@@ -98,6 +96,11 @@ public abstract class Building {
             // Set the building as built
             isBuilt = true;
         }).start();
+    }
+
+    public void remove() {
+        // Remove the building
+        Map.removeBuilding(this);
     }
 
     public int getWidth() {
@@ -203,40 +206,6 @@ public abstract class Building {
     public Work getWorkerType() {
         // Return the type of worker that can work in this building
         return workertype;
-    }
-
-    public void consumeResources() {
-        // Check if the building is built
-        if (!isBuilt) {
-            // Throw an exception
-            throw new IllegalArgumentException("The building is not built yet");
-        }
-
-        // Check if the building has enough ressources
-        if (!PlayerInventory.hasEnoughRessources(constructionCost)) {
-            // Throw an exception
-            throw new IllegalArgumentException("The building does not have enough "
-                    + "ressources");
-        }
-
-        // Remove the ressources from the player inventory
-        for (Ressource ressource : constructionCost.keySet()) {
-            PlayerInventory.useRessource(ressource,
-                    constructionCost.get(ressource));
-        }
-    }
-
-    public void produceResources() {
-        // Check if the building is built
-        if (!isBuilt) {
-            // Throw an exception
-            throw new IllegalArgumentException("The building is not built yet");
-        }
-
-        int ressourcesProduced = currentWorkers;
-        PlayerInventory.productRessource(Ressource.WOOD, ressourcesProduced);
-        System.out.println(" resources produced by the building at (" + x + ", "
-                + y + ")");
     }
 
     public void printBuilding() {
