@@ -6,5 +6,9 @@ public abstract class Work {
 
   public void work() { System.out.println("Working..."); }
 
+  public void goToWorkplace() { System.out.println("Going to workplace..."); }
+
+  public void goToSleep() { System.out.println("Going to sleep..."); }
+
   public void generateRessources() { System.out.println("Generating..."); }
 }
