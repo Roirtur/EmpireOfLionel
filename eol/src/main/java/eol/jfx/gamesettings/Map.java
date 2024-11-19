@@ -1,64 +1,88 @@
 package eol.jfx.gamesettings;
+
 import eol.jfx.buildings.Building;
 
 public class Map {
 
-  private final int width;
-  private final int height;
+    private final static int WIDTH = 10;
+    private final static int HEIGHT = 10;
+    private final static boolean[][] grid = new boolean[HEIGHT][WIDTH];
 
-  private final boolean[][] grid;
+    // The single instance of the class
+    private static volatile Map instance;
 
-  public Map(int width, int height) {
-    this.width = width;
-    this.height = height;
-    this.grid = new boolean[height][width];
-  }
-
-  public boolean canPlaceBuilding(int buildingWidth, int buildingHeight, int x, int y) {
-
-    if (x < 0 || y < 0 || x + buildingWidth > width ||
-        y + buildingHeight > height) {
-      return false;
+    // Private constructor to prevent instantiation
+    private Map() {
     }
 
-    for (int i = x; i < x + buildingWidth; i++) {
-      for (int j = y; j < y + buildingHeight; j++) {
-        if (grid[j][i]) {
-          return false;
+    // Public method to provide access to the single instance
+    public static Map getInstance() {
+        Map localInstance = Map.instance;
+        if (localInstance == null) {
+            // Safely create the instance if it doesn't exist (double-checked locking)
+            synchronized (Map.class) {
+                if (localInstance == null) {
+                    Map.instance = instance = new Map();
+                }
+            }
         }
-      }
+        return localInstance;
     }
 
-    return true;
-  }
-
-  public void placeBuilding(Building building, int x, int y) {
-
-    int buildingWidth = building.getWidth();
-    int buildingHeight = building.getHeight();
-
-    if (!canPlaceBuilding(buildingWidth, buildingHeight, x, y)) {
-      throw new IllegalArgumentException(
-          "Cannot place building at this position");
-    }
-
-    for (int i = x; i < x + buildingWidth; i++) {
-      for (int j = y; j < y + buildingHeight; j++) {
-        grid[i][j] = true;
-      }
-    }
-  }
-
-  public void removeBuilding(Building building) {
-      int x = building.getX();
-      int y = building.getY();
-      int buildingWidth = building.getWidth();
-      int buildingHeight = building.getHeight();
-  
-      for (int i = x; i < x + buildingWidth; i++) {
-        for (int j = y; j < y + buildingHeight; j++) {
-          grid[i][j] = false;
+    public static boolean canPlaceBuilding(int buildingWidth, int buildingHeight, int x, int y) {
+        if (x < 0 || y < 0 || x + buildingWidth > WIDTH || y + buildingHeight > HEIGHT) {
+            return false;
         }
-      }
-  }
+
+        System.out.println("Checking if building can be placed at " + x + ", " + y + " with width " + buildingWidth + " and height " + buildingHeight);
+
+        for (int i = x; i < x + buildingWidth; i++) {
+            for (int j = y; j < y + buildingHeight; j++) {
+                System.out.println("Checking grid at " + i + ", " + j + " = " + grid[i][j]);
+                if (grid[j][i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static void placeBuilding(Building building, int x, int y) {
+
+        int buildingWidth = building.getWidth();
+        int buildingHeight = building.getHeight();
+
+        if (!canPlaceBuilding(buildingWidth, buildingHeight, x, y)) {
+            throw new IllegalArgumentException(
+                    "Cannot place building at this position");
+        }
+
+        for (int i = x; i < x + buildingWidth; i++) {
+            for (int j = y; j < y + buildingHeight; j++) {
+                grid[j][i] = true;
+            }
+        }
+    }
+
+    public static void removeBuilding(Building building) {
+        int x = building.getX();
+        int y = building.getY();
+        int buildingWidth = building.getWidth();
+        int buildingHeight = building.getHeight();
+
+        for (int i = x; i < x + buildingWidth; i++) {
+            for (int j = y; j < y + buildingHeight; j++) {
+                grid[i][j] = false;
+            }
+        }
+    }
+
+    public static void printGrid() {
+        for (int i = 0; i < HEIGHT; i++) {
+            for (int j = 0; j < WIDTH; j++) {
+                System.out.print(grid[i][j] ? "X" : "O");
+            }
+            System.out.println();
+        }
+    }
 }

@@ -2,9 +2,10 @@ package eol.jfx.buildings;
 
 import java.util.HashMap;
 
+import eol.jfx.gamesettings.Map;
 import eol.jfx.residents.works.Work;
 import eol.jfx.ressources.PlayerInventory;
-import eol.jfx.ressources.Ressource;
+import eol.jfx.ressources.Ressource;;
 
 public abstract class Building {
 
@@ -63,12 +64,9 @@ public abstract class Building {
         boolean enoughRessources
                 = PlayerInventory.hasEnoughRessources(constructionCost);
 
-        // Check if the building is in a valid position
-        // TODO: Implement this method so that it do not overlap with other
-        // buildings
-        boolean validPosition = true;
+        // Position check is handled by Map
 
-        return enoughRessources && validPosition;
+        return enoughRessources;
     }
 
     private void build() {
@@ -77,6 +75,8 @@ public abstract class Building {
             // Throw an exception
             throw new IllegalArgumentException("The building is not buildable");
         }
+
+        Map.placeBuilding(this, x, y);
 
         // Remove the ressources from the player inventory
         for (Ressource ressource : constructionCost.keySet()) {

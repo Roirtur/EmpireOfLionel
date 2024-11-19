@@ -6,6 +6,7 @@ import eol.jfx.buildings.Building;
 import eol.jfx.buildings.Farm;
 import eol.jfx.buildings.House;
 import eol.jfx.gamesettings.Difficulty;
+import eol.jfx.gamesettings.Map;
 import eol.jfx.residents.Resident;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
@@ -57,7 +58,7 @@ public class App extends Application {
         // Create a new Farm
         Building farm = new Farm(0,0);
         farm.printBuilding();
-        Building house = new House(0,0);
+        Building house = new House(3,3);
         house.printBuilding();
 
         new Thread(() -> {
@@ -85,6 +86,8 @@ public class App extends Application {
             farmer.setWorkplace(farm);
             farmer.setHouse(house);
             farmer.print();
+
+            Map.printGrid();
         }).start();
     }
 
