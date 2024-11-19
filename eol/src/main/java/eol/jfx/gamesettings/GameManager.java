@@ -1,8 +1,9 @@
 package eol.jfx.gamesettings;
 
+import java.util.List;
+
 import eol.jfx.buildings.Building;
 import eol.jfx.residents.Resident;
-import java.util.List;
 
 public class GameManager {
   private List<Building> buildings;
@@ -24,10 +25,7 @@ public class GameManager {
   }
 
   public void updateResources() {
-    for (Building building : buildings) {
-      building.consumeResources();
-      building.produceResources();
-    }
+    // TODO
   }
 
   public void updateHunger() {
