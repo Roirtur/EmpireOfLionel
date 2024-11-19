@@ -21,7 +21,7 @@ public class Resident {
 
   public int x, y;
 
-  public Resident(int x, int y) {
+  public Resident() {
     // Test if enough player ressources
     if (PlayerInventory.getRessourceQuantity(Ressource.RESIDENTS) + 1 >
         PlayerInventory.getRessourceQuantity(Ressource.MAXRESIDENTS)) {
@@ -36,8 +36,9 @@ public class Resident {
     this.isAlive = true;
     this.hasTool = false;
 
-    this.x = x;
-    this.y = y;
+    // Random position from 100 to 500
+    this.x = (int)(Math.random() * 400) + 100;
+    this.y = (int)(Math.random() * 400) + 100;
   }
 
   public void setHouse(Building house) {
