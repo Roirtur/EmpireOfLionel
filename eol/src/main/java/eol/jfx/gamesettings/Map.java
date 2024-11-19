@@ -14,10 +14,7 @@ public class Map {
     this.grid = new boolean[height][width];
   }
 
-  public boolean canPlaceBuilding(Building building, int x, int y) {
-
-    int buildingWidth = building.getWidth();
-    int buildingHeight = building.getHeight();
+  public boolean canPlaceBuilding(int buildingWidth, int buildingHeight, int x, int y) {
 
     if (x < 0 || y < 0 || x + buildingWidth > width ||
         y + buildingHeight > height) {
@@ -37,28 +34,31 @@ public class Map {
 
   public void placeBuilding(Building building, int x, int y) {
 
-    if (!canPlaceBuilding(building, x, y)) {
+    int buildingWidth = building.getWidth();
+    int buildingHeight = building.getHeight();
+
+    if (!canPlaceBuilding(buildingWidth, buildingHeight, x, y)) {
       throw new IllegalArgumentException(
           "Cannot place building at this position");
     }
 
-    int buildingWidth = building.getWidth();
-    int buildingHeight = building.getHeight();
-
-    for (int i = 0; i < buildingHeight; i++) {
-      for (int j = 0; j < buildingWidth; j++) {
-        grid[y + i][x + j] = true;
+    for (int i = x; i < x + buildingWidth; i++) {
+      for (int j = y; j < y + buildingHeight; j++) {
+        grid[i][j] = true;
       }
     }
   }
 
   public void removeBuilding(Building building) {
-    for (int i = 0; i < height; i++) {
-      for (int j = 0; j < width; j++) {
-        if (grid[i][j]) {
+      int x = building.getX();
+      int y = building.getY();
+      int buildingWidth = building.getWidth();
+      int buildingHeight = building.getHeight();
+  
+      for (int i = x; i < x + buildingWidth; i++) {
+        for (int j = y; j < y + buildingHeight; j++) {
           grid[i][j] = false;
         }
       }
-    }
   }
 }

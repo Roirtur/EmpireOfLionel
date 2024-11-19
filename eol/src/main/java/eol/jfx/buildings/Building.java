@@ -8,7 +8,7 @@ import eol.jfx.ressources.Ressource;
 
 public abstract class Building {
 
-    public final int x, y;
+    private final int x, y;
     private final int width, height;
 
     private int maxResidents;
@@ -26,9 +26,9 @@ public abstract class Building {
     private Work workertype;
 
     private int upgrades = 0;
-    private int maxUpgrades = 3;
+    private final int maxUpgrades = 3;
 
-    private HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
+    private final HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
         {
             put(Ressource.WOOD, 10);
             put(Ressource.STONE, 10);
@@ -108,6 +108,14 @@ public abstract class Building {
         return height;
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     public int addResident(int quantity) {
         // Check if the building is built
         if (!isBuilt) {
@@ -176,6 +184,7 @@ public abstract class Building {
 
         // Remove the ressources from the player inventory
         PlayerInventory.useRessources(upgradeCost);
+        upgrades++;
 
         // Upgrade the building
         switch (type) {
