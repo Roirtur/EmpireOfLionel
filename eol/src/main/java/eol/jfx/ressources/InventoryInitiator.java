@@ -16,14 +16,10 @@ public class InventoryInitiator {
     // Depending on difficulty, add more resources
     switch (difficulty) {
     case EASY:
-      PlayerInventory.setRessourceQuantity(Ressource.FOOD, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.WOOD, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.STONE, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.TOOLS, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.LUMBER, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.STEEL, 1000);
-      PlayerInventory.setRessourceQuantity(Ressource.IRON, 1000);
-
+      PlayerInventory.setRessourceQuantity(Ressource.FOOD, 100);
+      PlayerInventory.setRessourceQuantity(Ressource.WOOD, 100);
+      PlayerInventory.setRessourceQuantity(Ressource.STONE, 100);
+      PlayerInventory.setRessourceQuantity(Ressource.TOOLS, 50);
       break;
     case MEDIUM:
       PlayerInventory.setRessourceQuantity(Ressource.FOOD, 50);
@@ -35,6 +31,14 @@ public class InventoryInitiator {
       PlayerInventory.setRessourceQuantity(Ressource.WOOD, 20);
       PlayerInventory.setRessourceQuantity(Ressource.STONE, 20);
       break;
+    case GODMOD:
+      PlayerInventory.setRessourceQuantity(Ressource.FOOD, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.WOOD, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.STONE, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.CEMENT, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.COAL, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.IRON, 10000);
+      PlayerInventory.setRessourceQuantity(Ressource.LUMBER, 10000);
     }
   }
 }
