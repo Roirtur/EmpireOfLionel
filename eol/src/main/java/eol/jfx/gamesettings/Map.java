@@ -30,6 +30,7 @@ public class Map {
     }
 
     public static boolean canPlaceBuilding(int buildingWidth, int buildingHeight, int x, int y) {
+        // TODO: Maybe return position of the occupied cells
         if (x < 0 || y < 0 || x + buildingWidth > WIDTH || y + buildingHeight > HEIGHT) {
             return false;
         }

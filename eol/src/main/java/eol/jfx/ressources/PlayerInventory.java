@@ -74,4 +74,10 @@ public class PlayerInventory {
         }
         return true;
     }
+
+    public static void print() {
+        for (Ressource ressource : inventory.keySet()) {
+            System.out.println(ressource + ": " + inventory.get(ressource));
+        }
+    }
 }
