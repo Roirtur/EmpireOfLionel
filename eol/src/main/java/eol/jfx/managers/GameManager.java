@@ -83,18 +83,6 @@ public class GameManager {
     }
   }
 
-  public void displayGameTime() {
-    long time = GameTime.getInstance().getTimeInSeconds();
-    System.out.println("Time: " + formatTime(time));
-  }
-
-  private String formatTime(long time) {
-    long hours = (time / 3600) % 24;
-    long minutes = (time % 3600) / 60;
-    long seconds = time % 60;
-    return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
-  }
-
   public boolean isNight() {
     long time = GameTime.getInstance().getTimeInSeconds();
     long hours = (time / 3600) % 24;
