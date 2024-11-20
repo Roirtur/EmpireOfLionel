@@ -21,9 +21,7 @@ public class Woodworker extends Work {
     // When the work is done, generate income
     new Thread(() -> {
       try {
-        Thread.sleep(TimeProductionForRessource.WOOD
-                         .getTime()); // Assuming TimeProductionForRessource is
-                                      // defined in milliseconds
+        Thread.sleep(TimeProductionForRessource.LUMBER.getTime());
         generateRessources();
         System.out.println("Woodworkers finished working");
         isWorking = false;
