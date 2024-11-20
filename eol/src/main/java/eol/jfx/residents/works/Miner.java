@@ -6,6 +6,8 @@ import eol.jfx.ressources.TimeProductionForRessource;
 
 public class Miner extends Work {
 
+  private Ressource currentRessource;
+
   @Override
   public String toString() {
     return "Miner";
@@ -15,34 +17,40 @@ public class Miner extends Work {
   public void work() {
     isWorking = true;
     System.out.println("Mining resources...");
-    // TODO Mine at the Quarry
 
-    // When the work is done, generate income
     new Thread(() -> {
       try {
-        Ressource[] ressources = {Ressource.STONE, Ressource.COAL,
-                                  Ressource.IRON};
-        Ressource selectedRessource =
-            ressources[new java.util.Random().nextInt(ressources.length)];
+        generateRessources();
+        Ressource selectedRessource = currentRessource;
+
         long productionTime =
             TimeProductionForRessource.valueOf(selectedRessource.name())
                 .getTime();
+
         Thread.sleep(productionTime);
-        PlayerInventory.productRessource(selectedRessource, 1);
+
         System.out.println("Miner finished working on " +
                            selectedRessource.name().toLowerCase());
-        isWorking = false;
       } catch (InterruptedException e) {
         e.printStackTrace();
+      } finally {
+        isWorking = false;
       }
     }).start();
   }
 
   @Override
   public void generateRessources() {
-    // Chose randomly between these, with odds
-    PlayerInventory.productRessource(Ressource.STONE, 1);
-    PlayerInventory.productRessource(Ressource.COAL, 1);
-    PlayerInventory.productRessource(Ressource.IRON, 1);
+    double random = Math.random();
+    if (random < 0.6) {
+      currentRessource = Ressource.STONE;
+    } else if (random < 0.9) {
+      currentRessource = Ressource.COAL;
+    } else {
+      currentRessource = Ressource.IRON;
+    }
+
+    PlayerInventory.productRessource(currentRessource, 1);
+    System.out.println("Generated " + currentRessource.name().toLowerCase());
   }
 }
