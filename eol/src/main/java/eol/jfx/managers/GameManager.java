@@ -4,6 +4,7 @@ import eol.jfx.buildings.Building;
 import eol.jfx.buildings.BuildingFactory;
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.residents.Resident;
+import eol.jfx.ressources.GameTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class GameManager {
   private static volatile GameManager instance;
 
   // Private constructor to prevent instantiation
-  private GameManager() {}
+  private GameManager() { GameTime.getInstance(); }
 
   // Public method to provide access to the single instance
   public static GameManager getInstance() {
@@ -82,8 +83,32 @@ public class GameManager {
     }
   }
 
+  public void displayGameTime() {
+    long time = GameTime.getInstance().getTimeInSeconds();
+    System.out.println("Time: " + formatTime(time));
+  }
+
+  private String formatTime(long time) {
+    long hours = (time / 3600) % 24;
+    long minutes = (time % 3600) / 60;
+    long seconds = time % 60;
+    return String.format("%02dh %02dm %02ds", hours, minutes, seconds);
+  }
+
+  public boolean isNight() {
+    long time = GameTime.getInstance().getTimeInSeconds();
+    long hours = (time / 3600) % 24;
+    return hours >= 20 || hours < 6;
+  }
+
   public void updateGame() {
-    updateResources();
-    updateHunger();
+
+    if (isNight()) {
+      System.out.println("It's night time");
+    } else {
+      System.out.println("It's day time");
+      updateResources();
+      updateHunger();
+    }
   }
 }
