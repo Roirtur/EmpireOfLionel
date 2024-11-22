@@ -5,6 +5,7 @@ import java.io.IOException;
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.gamesettings.Difficulty;
 import eol.jfx.managers.GameManager;
+import eol.jfx.managers.GameTime;
 import eol.jfx.managers.Map;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
@@ -102,15 +103,25 @@ public class App extends Application {
     //   PlayerInventory.print();
     // }).start();
 
-    GameManager.addBuilding(BuildingType.APARTMENT, 3, 3);
-    GameManager.addBuilding(BuildingType.APARTMENT, 3, 1);
-    GameManager.addBuilding(BuildingType.APARTMENT, 3, 5);
-    GameManager.addBuilding(BuildingType.APARTMENT, 3, 7);
+    // GameManager.addBuilding(BuildingType.APARTMENT, 3, 3);
+    // GameManager.addBuilding(BuildingType.APARTMENT, 3, 1);
+    // GameManager.addBuilding(BuildingType.APARTMENT, 3, 5);
+    // GameManager.addBuilding(BuildingType.APARTMENT, 3, 7);
 
-    GameManager.addBuilding(BuildingType.APARTMENT, 0, 3);
-    GameManager.addBuilding(BuildingType.APARTMENT, 6, 3);
-    Map.printGrid();
-    GameManager.removeBuilding(4, 4);
-    Map.printGrid();
+    // GameManager.addBuilding(BuildingType.APARTMENT, 0, 3);
+    // GameManager.addBuilding(BuildingType.APARTMENT, 6, 3);
+    // Map.printGrid();
+    // GameManager.removeBuilding(4, 4);
+    // Map.printGrid();
+    GameTime.getInstance().startTimer();
+
+    new Thread(() -> {
+      try {
+        Thread.sleep(100000);
+        GameTime.getInstance().stopTimer();
+      } catch (InterruptedException e) {
+        System.err.println("Thread was interrupted!");
+      }
+    }).start();
   }
 }

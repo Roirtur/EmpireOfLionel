@@ -4,7 +4,6 @@ import eol.jfx.buildings.Building;
 import eol.jfx.buildings.BuildingFactory;
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.residents.Resident;
-import eol.jfx.ressources.GameTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,15 +82,9 @@ public class GameManager {
     }
   }
 
-  public boolean isNight() {
-    long time = GameTime.getInstance().getTimeInSeconds();
-    long hours = (time / 3600) % 24;
-    return hours >= 20 || hours < 6;
-  }
-
   public void updateGame() {
 
-    if (isNight()) {
+    if (GameTime.isNight()) {
       System.out.println("It's night time");
     } else {
       System.out.println("It's day time");
