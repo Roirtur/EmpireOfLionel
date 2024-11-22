@@ -9,122 +9,123 @@ import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
 
 public class Resident {
-  private int age;
-  private int hunger;
 
-  private boolean isAlive;
-  private boolean hasTool;
+    private int age;
+    private int hunger;
 
-  private Building house;
-  private Building workplace;
-  private Work work;
+    private boolean isAlive;
 
-  public int x, y;
+    private Building house;
+    private Building workplace;
+    private Work work;
 
-  public Resident() {
-    // Test if enough player ressources
-    if (PlayerInventory.getRessourceQuantity(Ressource.RESIDENTS) + 1 >
-        PlayerInventory.getRessourceQuantity(Ressource.MAXRESIDENTS)) {
-      throw new IllegalStateException(
-          "Not enough ressources to create a resident");
+    public int x, y;
+
+    public Resident() {
+        // Test if enough player ressources
+        if (PlayerInventory.getRessourceQuantity(Ressource.RESIDENTS) + 1
+                > PlayerInventory.getRessourceQuantity(Ressource.MAXRESIDENTS)) {
+            throw new IllegalStateException(
+                    "Not enough ressources to create a resident");
+        }
+
+        PlayerInventory.productRessource(Ressource.RESIDENTS);
+
+        this.age = 0;
+        this.hunger = 100;
+        this.isAlive = true;
+
+        // Random position from 100 to 500
+        this.x = (int) (Math.random() * 400) + 100;
+        this.y = (int) (Math.random() * 400) + 100;
     }
 
-    PlayerInventory.productRessource(Ressource.RESIDENTS);
+    public void setHouse(Building house) {
+        if (house == null) {
+            this.house = null;
+            return;
+        }
 
-    this.age = 0;
-    this.hunger = 100;
-    this.isAlive = true;
-    this.hasTool = false;
-
-    // Random position from 100 to 500
-    this.x = (int)(Math.random() * 400) + 100;
-    this.y = (int)(Math.random() * 400) + 100;
-  }
-
-  public void setHouse(Building house) {
-    if (house == null) {
-      this.house = null;
-      return;
+        this.house = house;
+        if (this.house.addResident(1) > 0) {
+            this.house = null;
+            throw new IllegalStateException("The house is full");
+        }
     }
 
-    this.house = house;
-    if (this.house.addResident(1) > 0) {
-      this.house = null;
-      throw new IllegalStateException("The house is full");
-    }
-  }
-
-  public boolean findAndSetHouse(List<Building> buildings) {
-    for (Building building : buildings) {
-      try {
-        setHouse(building);
-        return true;
-      } catch (IllegalStateException e) {
-      }
-    }
-    return false;
-  }
-
-  public void setWorkplace(Building workplace) {
-    if (!hasTool) {
-      throw new IllegalStateException("The resident does not have a tool");
+    public boolean findAndSetHouse(List<Building> buildings) {
+        for (Building building : buildings) {
+            try {
+                setHouse(building);
+                return true;
+            } catch (IllegalStateException e) {
+            }
+        }
+        return false;
     }
 
-    if (workplace == null) {
-      this.work = null;
-      return;
+    public void setWorkplace(Building workplace) {
+        if (workplace == null) {
+            this.work = null;
+            return;
+        }
+
+        this.workplace = workplace;
+        if (this.workplace.addWorkers(1) > 0) {
+            this.workplace = null;
+            throw new IllegalStateException("The workplace is full");
+        }
+        this.work = WorkFactory.createWork(workplace.getWorkerType());
+        System.out.println("New work: " + work.toString());
+        print();
     }
 
-    this.workplace = workplace;
-    if (this.workplace.addWorkers(1) > 0) {
-      this.workplace = null;
-      throw new IllegalStateException("The workplace is full");
-    }
-    this.work = WorkFactory.createWork(workplace.getWorkerType());
-  }
-
-  public void giveTool() {
-    if (hasTool) {
-      throw new IllegalStateException("The resident already has a tool");
-    }
-
-    if (PlayerInventory.getRessourceQuantity(Ressource.TOOLS) <= 0) {
-      throw new IllegalStateException("The player does not have any tools");
+    private void eat() {
+        if (PlayerInventory.getRessourceQuantity(Ressource.FOOD) <= 0) {
+            return;
+        }
+        
+        System.out.println("Resident is eating");
+        PlayerInventory.useRessource(Ressource.FOOD);
+        hunger += 50;
+        if (hunger > 100) {
+            hunger = 100;
+        }
     }
 
-    PlayerInventory.useRessource(Ressource.TOOLS);
-    this.hasTool = true;
-  }
+    public void updateHunger() {
+        hunger -= 5;
 
-  public void consumeFood() {
-    if (hunger <= 0) {
-      isAlive = false;
-      return;
+        if (hunger <= 40) {
+            eat();
+        }
+        if (hunger <= 0) {
+            isAlive = false;
+        }
     }
 
-    hunger -= 1;
-  }
+    public void updateDay() {
+        // TODO: Update age and hunger once in a while
+        // TODO: Go to house when it is night
+        if (workplace != null && work != null && !work.isWorking) {
+            work.work();
+        }
 
-  public void update() {
-    // TODO: Update age and hunger once in a while
-    // TODO: Go to house when it is night
-    if (work.isWorking) {
-      return;
+        updateHunger();
     }
 
-    if (workplace != null) {
-      work.work();
+    public void updateNight() {
+      // Do not stop work, it stops by itself when task is done
+      updateHunger();
     }
-  }
 
-  public void print() {
-    System.out.println("Resident at (" + x + ", " + y + ")");
-    System.out.println("Age: " + age);
-    System.out.println("Hunger: " + hunger);
-    System.out.println("Is alive: " + isAlive);
-    System.out.println("Has tool: " + hasTool);
-    System.out.println("House: " + house);
-    System.out.println("Workplace: " + workplace);
-    System.out.println("Work: " + work.toString());
-  }
+    public void print() {
+        System.out.println("Resident at (" + x + ", " + y + ")");
+        System.out.println("Age: " + age);
+        System.out.println("Hunger: " + hunger);
+        System.out.println("Is alive: " + isAlive);
+        System.out.println("House: " + house);
+        System.out.println("Workplace: " + workplace);
+        System.out.println("Work: " + work.toString());
+    }
 }

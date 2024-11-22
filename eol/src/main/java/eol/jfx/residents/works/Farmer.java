@@ -14,7 +14,6 @@ public class Farmer extends Work {
   @Override
   public void work() {
     isWorking = true;
-    System.out.println("Working on food...");
     // TODO Farm at the fields
 
     // When the work is done, generate income
@@ -22,16 +21,16 @@ public class Farmer extends Work {
       try {
         Thread.sleep(TimeProductionForRessource.FOOD.getTime());
         generateRessources();
-        System.out.println("Farmers finished working");
+        System.out.println("Farmer has finished working");
         isWorking = false;
       } catch (InterruptedException e) {
-        e.printStackTrace();
+        System.err.println("Thread was interrupted!");
       }
     }).start();
   }
 
   @Override
   public void generateRessources() {
-    PlayerInventory.productRessource(Ressource.FOOD, 1);
+    PlayerInventory.productRessource(Ressource.FOOD, 1000);
   }
 }

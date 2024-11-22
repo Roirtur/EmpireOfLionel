@@ -48,7 +48,7 @@ public class GameTime {
             public void run() {
                 incrementTime();
             }
-        }, 1000, 1000);
+        }, 500, 500);
     }
 
     public void stopTimer() {
@@ -57,6 +57,7 @@ public class GameTime {
 
     private synchronized void incrementTime() {
         seconds++;
+        GameManager.getInstance().updateTime();
         checkNight();
         displayTime();
     }
@@ -89,11 +90,7 @@ public class GameTime {
 
     private void changeNightState() {
         night = !night;
-        if (night) {
-            System.out.println("It's night time!");
-        } else {
-            System.out.println("It's day time!");
-        }
+        GameManager.updateNight();
     }
 
     public static boolean isNight() {

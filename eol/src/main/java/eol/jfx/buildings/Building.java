@@ -23,6 +23,7 @@ public abstract class Building {
   // Hashmap of ressources for construction cost
   private final HashMap<Ressource, Integer> constructionCost;
   private final int constructionTime;
+  private int constructionProgress = 0;
 
   public boolean isBuilt = false;
 
@@ -30,8 +31,6 @@ public abstract class Building {
 
   private int upgrades = 0;
   private final int maxUpgrades = 3;
-
-  private Thread thread;
 
   private final HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
     {
@@ -54,7 +53,7 @@ public abstract class Building {
     this.currentResidents = 0;
     this.maxWorkers = maxWorkers;
     this.currentWorkers = 0;
-    this.constructionTime = constructionTime;
+    this.constructionTime = constructionTime * 24;
     this.constructionCost = constructionCost;
 
     System.out.println("Building created");
@@ -80,28 +79,12 @@ public abstract class Building {
     }
 
     useRessources(constructionCost);
-    System.out.println("Building is being built... (waiting " +
-                       constructionTime + " seconds)");
-    thread = new Thread(() -> {
-      try {
-        Thread.sleep(constructionTime * 1000);
-        System.out.println("Building is built!" + exists);
-
-        // Set the building as built
-        isBuilt = true;
-      } catch (InterruptedException e) {
-        System.err.println("Thread was interrupted!");
-      }
-    });
-
-    thread.start();
   }
 
   public void remove() {
     // Remove the building
     exists = false;
     // TODO do things only if exists on other functions
-    thread.interrupt();
   }
 
   public int getWidth() { return width; }
@@ -217,5 +200,18 @@ public abstract class Building {
 
     // Remove the ressources from the player inventory
     PlayerInventory.useRessources(ressources);
+  }
+
+  public void update() {
+    // Update the building
+    if (!isBuilt) {
+      // Check if the building is built
+      if (constructionProgress >= constructionTime) {
+        isBuilt = true;
+        System.out.println("Building is built");
+      } else {
+        constructionProgress++;
+      }
+    }
   }
 }

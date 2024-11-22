@@ -1,15 +1,15 @@
 package eol.jfx.ressources;
 
 public enum TimeProductionForRessource {
-  FOOD(5),
-  WOOD(15),
-  STONE(25),
-  COAL(50),
-  IRON(100),
-  STEEL(150),
-  CEMENT(200),
-  LUMBER(250),
-  TOOLS(300);
+  FOOD(1000),
+  WOOD(1000),
+  STONE(1000),
+  COAL(1000),
+  IRON(1000),
+  STEEL(1000),
+  CEMENT(1000),
+  LUMBER(1000),
+  TOOLS(1000);
 
   private final int time;
 
