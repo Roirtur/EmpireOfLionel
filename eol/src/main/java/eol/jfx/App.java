@@ -5,8 +5,6 @@ import java.io.IOException;
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.gamesettings.Difficulty;
 import eol.jfx.managers.GameManager;
-import eol.jfx.managers.GameTime;
-import eol.jfx.managers.Map;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import javafx.application.Application;
@@ -125,5 +123,13 @@ public class App extends Application {
             }
         }
         GameManager.assignWorkerToBuilding(GameManager.getBuildings().get(0));
+        // Wait 2 seconds
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            System.err.println("Thread was interrupted!");
+        }
+
+        GameManager.removeWorkerFromBuilding(GameManager.getBuildings().get(0));
     }
 }

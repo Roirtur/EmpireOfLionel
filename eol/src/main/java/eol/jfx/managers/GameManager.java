@@ -1,17 +1,14 @@
 package eol.jfx.managers;
 
-import java.security.DrbgParameters;
+import java.util.ArrayList;
+import java.util.List;
 
 import eol.jfx.buildings.Building;
 import eol.jfx.buildings.BuildingFactory;
 import eol.jfx.buildings.BuildingType;
 import eol.jfx.residents.Resident;
-import eol.jfx.ressources.Ressource;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import eol.jfx.ressources.PlayerInventory;
+import eol.jfx.ressources.Ressource;
 
 public class GameManager {
 
@@ -154,7 +151,7 @@ public class GameManager {
             throw new IllegalStateException("No tool available");
         }
 
-        if (building.addWorkers(1) > 0) {
+        if (building.addWorkers(unemployed_resident) > 0) {
             throw new IllegalStateException("The building is full");
         }
 
@@ -162,6 +159,22 @@ public class GameManager {
         working_residents.add(unemployed_resident);
 
         unemployed_resident.setWorkplace(building);
+    }
+
+    public static void removeWorkerFromBuilding(Building building) {
+        getInstance().FireWorkerFromBuilding(building);
+    }
+
+    private void FireWorkerFromBuilding(Building building) {
+        Resident worker = building.fireWorker();
+        // Moves the worker back to the unemployed list
+        unemployed_residents.add(worker);
+        working_residents.remove(worker);
+
+        worker.fire();
+        System.out.println("Worker fired");
+        worker.print();
+        building.printBuilding();
     }
 
     public static void updateNight() {

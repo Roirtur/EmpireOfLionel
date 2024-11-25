@@ -71,13 +71,18 @@ public class Resident {
         }
 
         this.workplace = workplace;
-        if (this.workplace.addWorkers(1) > 0) {
-            this.workplace = null;
-            throw new IllegalStateException("The workplace is full");
-        }
         this.work = WorkFactory.createWork(workplace.getWorkerType());
         System.out.println("New work: " + work.toString());
         print();
+    }
+
+    public void fire() {
+        if (workplace == null) {
+            return;
+        }
+
+        workplace = null;
+        work = null;
     }
 
     private void eat() {
@@ -126,6 +131,8 @@ public class Resident {
         System.out.println("Is alive: " + isAlive);
         System.out.println("House: " + house);
         System.out.println("Workplace: " + workplace);
-        System.out.println("Work: " + work.toString());
+        if (work != null) {
+            System.out.println("Work: " + work.toString());
+        }
     }
 }
