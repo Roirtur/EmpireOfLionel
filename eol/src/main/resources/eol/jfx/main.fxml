@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:controller="eol.jfx.controllers.MainController"
+            xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8.0.171">
+    <center>
+        <GridPane fx:id="root">
+            <!-- Vous pouvez ajouter d'autres éléments dans ce GridPane si nécessaire -->
+        </GridPane>
+    </center>
+</BorderPane>

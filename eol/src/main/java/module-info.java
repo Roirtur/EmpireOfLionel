@@ -1,10 +1,9 @@
-
 module eol.jfx {
-    requires javafx.controls;
-    requires javafx.fxml;
-    requires transitive javafx.graphics;
+  requires javafx.controls;
+  requires javafx.fxml;
+  requires java.base;
 
+  opens eol.jfx.controllers to javafx.fxml;
 
-    opens eol.jfx to javafx.fxml;
-    exports eol.jfx;
+  exports eol.jfx;
 }
