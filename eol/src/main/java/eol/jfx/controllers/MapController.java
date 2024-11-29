@@ -28,7 +28,7 @@ public class MapController {
     for (int row = 0; row < rows; row++) {
       for (int col = 0; col < cols; col++) {
         Image ground = new Image(
-            getClass().getResourceAsStream("/eol/img_no_bg/house.png"));
+            getClass().getResourceAsStream("/eol/img_no_bg/ground.png"));
         ImageView imageView = new ImageView(ground);
 
         imageView.setFitWidth(50);

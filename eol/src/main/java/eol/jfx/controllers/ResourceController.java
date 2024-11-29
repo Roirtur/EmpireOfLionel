@@ -1,5 +1,7 @@
 package eol.jfx.controllers;
 
+import eol.jfx.ressources.PlayerInventory;
+import eol.jfx.ressources.Ressource;
 import java.io.File;
 import java.net.URL;
 import javafx.fxml.FXML;
@@ -7,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class ResourceController {
 
@@ -38,12 +41,21 @@ public class ResourceController {
 
       if (files != null) {
         for (File file : files) {
+          String fileName = file.getName().replace(".png", "").toUpperCase();
+          Ressource ressource = Ressource.valueOf(fileName);
+
           Image image = new Image(file.toURI().toString());
           ImageView imageView = new ImageView(image);
           imageView.setFitWidth(50);
           imageView.setFitHeight(50);
           imageView.setPreserveRatio(true);
-          resourceBox.getChildren().add(imageView);
+
+          int quantity = PlayerInventory.getRessourceQuantity(ressource);
+          Label quantityLabel = new Label(String.valueOf(quantity));
+
+          VBox vbox = new VBox(imageView, quantityLabel);
+          vbox.setSpacing(5);
+          resourceBox.getChildren().add(vbox);
         }
       } else {
         System.err.println("No image files found in the resource folder.");

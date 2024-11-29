@@ -21,26 +21,19 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    scene = new Scene(loadFXML("main"), 800, 600);
+    InventoryInitiator.initializeInventory(Difficulty.GODMOD);
+    PlayerInventory.print();
+
+    scene = new Scene(loadFXML("main"), 1200, 800);
     stage.setScene(scene);
     stage.show();
   }
 
-  // static void setRoot(String fxml) throws IOException {
-  //     scene.setRoot(loadFXML(fxml));
-  // }
   private static Parent loadFXML(String fxml) throws IOException {
     FXMLLoader fxmlLoader =
-        new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        new FXMLLoader(App.class.getResource("/eol/jfx/" + fxml + ".fxml"));
     return fxmlLoader.load();
   }
 
-  public static void main(String[] args) {
-    launch();
-
-    // Temporary code to test
-    InventoryInitiator.initializeInventory(Difficulty.GODMOD);
-
-    PlayerInventory.print();
-  }
+  public static void main(String[] args) { launch(); }
 }

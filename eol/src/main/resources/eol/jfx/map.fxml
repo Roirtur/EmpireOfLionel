@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.StackPane?>
 
-<GridPane fx:controller="eol.jfx.controllers.MapController"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:id="mapGrid">
-    <!-- Ajouter des éléments ici -->
-</GridPane>
+<StackPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="eol.jfx.controllers.MapController">
+    <GridPane fx:id="mapGrid">
+        <!-- Ajouter des éléments ici -->
+    </GridPane>
+</StackPane>
