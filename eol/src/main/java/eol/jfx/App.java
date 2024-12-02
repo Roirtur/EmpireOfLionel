@@ -1,11 +1,10 @@
 package eol.jfx;
 
-import eol.jfx.buildings.BuildingType;
+import java.io.IOException;
+
 import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.managers.GameManager;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

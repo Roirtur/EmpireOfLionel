@@ -1,0 +1,10 @@
+.image-button {
+  -fx-background-color: transparent;
+  -fx-padding: 0;
+  -fx-border-width: 0;
+}
+
+.building-selected {
+  -fx-border-color: #ff0000;
+  -fx-border-width: 2;
+}

@@ -4,10 +4,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="eol.jfx.controllers.ResourceController"
-      spacing="10" alignment="BOTTOM_CENTER">
-    <HBox fx:id="resourceBox" spacing="10" alignment="CENTER">
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="eol.jfx.viewcontrollers.ResourceController"
+      alignment="TOP_RIGHT">
+    <VBox fx:id="resourceBox" spacing="10" alignment="TOP_RIGHT">
         <!-- Les labels des ressources seront ajoutés ici par le contrôleur -->
-    </HBox>
-</VBox>
+    </VBox>
+</HBox>

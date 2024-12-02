@@ -3,7 +3,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml" fx:controller="eol.jfx.controllers.MapController">
+<StackPane alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="eol.jfx.viewcontrollers.MapController"
+    stylesheets="@css/gameview.css">
     <GridPane fx:id="mapGrid">
         <!-- Ajouter des éléments ici -->
     </GridPane>

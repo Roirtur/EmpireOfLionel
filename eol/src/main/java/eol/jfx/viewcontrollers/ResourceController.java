@@ -1,19 +1,19 @@
-package eol.jfx.controllers;
+package eol.jfx.viewcontrollers;
+
+import java.io.File;
+import java.net.URL;
 
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import java.io.File;
-import java.net.URL;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ResourceController {
 
-  @FXML private HBox resourceBox;
+  @FXML private VBox resourceBox;
 
   @FXML
   public void initialize() {

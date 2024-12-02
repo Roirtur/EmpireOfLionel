@@ -4,8 +4,8 @@ import eol.jfx.buildings.Building;
 
 public class Map {
 
-  private final static int WIDTH = 10;
-  private final static int HEIGHT = 10;
+  private final static int WIDTH = 34;
+  private final static int HEIGHT = 18;
   private final static boolean[][] grid = new boolean[HEIGHT][WIDTH];
 
   // The single instance of the class
@@ -26,6 +26,10 @@ public class Map {
       }
     }
     return localInstance;
+  }
+
+  public static boolean[][] getGrid() {
+    return grid;
   }
 
   public static boolean canPlaceBuilding(int buildingWidth, int buildingHeight,

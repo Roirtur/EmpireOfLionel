@@ -3,7 +3,7 @@ module eol.jfx {
   requires javafx.fxml;
   requires java.base;
 
-  opens eol.jfx.controllers to javafx.fxml;
+  opens eol.jfx.viewcontrollers to javafx.fxml;
 
   exports eol.jfx;
 }
