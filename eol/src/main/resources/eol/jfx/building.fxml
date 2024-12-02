@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.ImageView?>
+
+<HBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="eol.jfx.controllers.BuildingCreatorController"
+      alignment="TOP_RIGHT">
+    <VBox fx:id="buildingBox" spacing="10" alignment="TOP_RIGHT">
+        <!-- Les images des bâtiments seront ajoutées ici par le contrôleur -->
+    </VBox>
+</HBox>

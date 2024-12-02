@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="eol.jfx.controllers.ResourceController"
+      spacing="10" alignment="BOTTOM_CENTER">
+    <HBox fx:id="resourceBox" spacing="10" alignment="CENTER">
+        <!-- Les labels des ressources seront ajoutés ici par le contrôleur -->
+    </HBox>
+</VBox>
