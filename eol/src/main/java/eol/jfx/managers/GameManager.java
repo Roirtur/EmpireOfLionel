@@ -77,7 +77,7 @@ public class GameManager {
     public static void addBuilding(BuildingType type, int x, int y) {
         Building building = BuildingFactory.createBuilding(type, x, y);
 
-        if (!Map.placeBuilding(building, x, y)) {
+        if (!GridMap.placeBuilding(building, x, y)) {
             throw new IllegalStateException("Can't place building at " + x + ", "
                     + y);
         }
@@ -109,7 +109,7 @@ public class GameManager {
 
     private void removeBuilding(Building building) {
         buildings.remove(building);
-        Map.removeBuilding(building);
+        GridMap.removeBuilding(building);
         building.remove();
     }
 

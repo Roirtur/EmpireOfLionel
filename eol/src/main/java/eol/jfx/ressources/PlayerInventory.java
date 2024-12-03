@@ -1,5 +1,11 @@
 package eol.jfx.ressources;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import eol.jfx.observers.Observer;
+
 public class PlayerInventory {
 
     // We use Singleton pattern to make sure that we have only one instance of the inventory
@@ -21,18 +27,30 @@ public class PlayerInventory {
     }
 
     // We set here the inventory of the player, with the quantity of each ressource in a dictionary
-    private static final java.util.HashMap<Ressource, Integer> inventory = new java.util.HashMap<>();
+    private static final HashMap<Ressource, Integer> inventory = new HashMap<>();
+    private static final List<Observer> observers = new ArrayList<>();
+
+    public static void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public static void unregisterObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    private static void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
 
     public static void productRessource(Ressource ressource) {
         productRessource(ressource, 1);
     }
 
     public static void productRessource(Ressource ressource, int quantity) {
-        if (inventory.containsKey(ressource)) {
-            inventory.put(ressource, inventory.get(ressource) + quantity);
-        } else {
-            inventory.put(ressource, quantity);
-        }
+        inventory.put(ressource, inventory.getOrDefault(ressource, 0) + quantity);
+        notifyObservers();
     }
 
     public static void useRessource(Ressource ressource) {
@@ -45,6 +63,7 @@ public class PlayerInventory {
             throw new IllegalArgumentException("You don't have this ressource");
         } else {
             inventory.put(ressource, inventory.get(ressource) - quantity);
+            notifyObservers();
         }
     }
 
@@ -60,10 +79,12 @@ public class PlayerInventory {
 
     public static void setRessourceQuantity(Ressource ressource, int quantity) {
         inventory.put(ressource, quantity);
+        notifyObservers();
     }
     
     public static void clear() {
         inventory.clear();
+        notifyObservers();
     }
 
     public static boolean hasEnoughRessources(java.util.HashMap<Ressource, Integer> ressources) {
