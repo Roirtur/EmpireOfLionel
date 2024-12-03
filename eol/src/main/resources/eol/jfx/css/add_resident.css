@@ -1,0 +1,32 @@
+#addResidentButton {
+    -fx-background-color: #333333;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+}
+
+#addResidentButton:hover {
+    -fx-background-color: #555555;
+}
+
+#residentCountField {
+    -fx-border-color: #333333;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #ffffff;
+    -fx-background-color: #000000;
+}
+
+.alert {
+    -fx-background-color: #f8f8f8;
+    -fx-border-color: #333333;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}

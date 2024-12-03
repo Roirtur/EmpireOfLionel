@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="eol.jfx.viewcontrollers.AddResidentController"
+      alignment="CENTER"
+      spacing="10"
+      stylesheets="@css/add_resident.css">
+    <HBox spacing="10" alignment="CENTER" style="-fx-padding: 0 0 0 20;">
+        <TextField fx:id="residentCountField" promptText="nbr of residents" id="residentCountField"/>
+        <Button text="+" onAction="#handleAddResident" id="addResidentButton"/>
+    </HBox>
+</VBox>
