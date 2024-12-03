@@ -1,8 +1,11 @@
 package eol.jfx.viewcontrollers;
 
+import eol.jfx.managers.GameTime;
 import java.io.IOException;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -12,6 +15,7 @@ import javafx.scene.layout.VBox;
 public class MainController {
 
   @FXML private GridPane root; // Utilisez GridPane au lieu de BorderPane
+  @FXML private Label timeLabel;
 
   @FXML
   public void initialize() {
@@ -48,6 +52,10 @@ public class MainController {
                1); // Ajoutez addResidentPane dans le GridPane
       GridPane.setHgrow(addResidentPane, Priority.ALWAYS);
       GridPane.setVgrow(addResidentPane, Priority.ALWAYS);
+
+      // Lier le label au timeProperty de GameTime
+      timeLabel.textProperty().bind(GameTime.getInstance().timeProperty());
+      GameTime.getInstance().startTimer();
 
     } catch (IOException e) {
       e.printStackTrace();

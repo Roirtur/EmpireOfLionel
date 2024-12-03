@@ -5,9 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" spacing="20" alignment="CENTER" styleClass="vbox" stylesheets="@css/menu.css">
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eol.jfx.viewcontrollers.MenuController" spacing="20" alignment="CENTER" styleClass="vbox" stylesheets="@css/menu.css">
     <Label text="Empire of Lionel" styleClass="title-label"/>
-    <Button text="Start Game" styleClass="menu-button"/>
-    <Button text="Settings" styleClass="menu-button"/>
-    <Button text="Exit" styleClass="menu-button"/>
+    <Button fx:id="startGameButton" text="Start Game" styleClass="menu-button" onAction="#handleStartGame"/>
+    <Button text="Settings" styleClass="menu-button" onAction="#handleSettings"/>
+    <Button text="Exit" styleClass="menu-button" onAction="#handleExit"/>
 </VBox>

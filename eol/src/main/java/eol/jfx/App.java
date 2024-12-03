@@ -17,9 +17,8 @@ public class App extends Application {
 
   @Override
   public void start(Stage stage) throws IOException {
-    InventoryInitiator.initializeInventory(Difficulty.GODMOD);
     FXMLLoader fxmlLoader =
-        new FXMLLoader(App.class.getResource("/eol/jfx/main.fxml"));
+        new FXMLLoader(App.class.getResource("/eol/jfx/menu.fxml"));
     Parent root = fxmlLoader.load();
     Scene scene =
         new Scene(root, 720, 480); // Set initial window size to 720x480
@@ -29,8 +28,5 @@ public class App extends Application {
     stage.show();
   }
 
-  public static void main(String[] args) {
-    GameManager.startGame();
-    launch();
-  }
+  public static void main(String[] args) { launch(); }
 }

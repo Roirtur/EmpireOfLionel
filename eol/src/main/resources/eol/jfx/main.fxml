@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.Label?>
 
 <BorderPane fx:controller="eol.jfx.viewcontrollers.MainController"
             xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8.0.171"
@@ -24,4 +25,7 @@
             </GridPane>
         </StackPane>
     </center>
+    <bottom>
+        <Label fx:id="timeLabel" styleClass="time-label" alignment="BOTTOM_LEFT" />
+    </bottom>
 </BorderPane>

@@ -2,6 +2,9 @@ package eol.jfx.managers;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * The GameTime class is a singleton that manages the in-game time. It uses a
@@ -21,6 +24,8 @@ public class GameTime {
 
   private long days;
   private long hours;
+
+  private final StringProperty timeProperty = new SimpleStringProperty();
 
   // Private constructor to prevent instantiation
   private GameTime() {
@@ -57,10 +62,16 @@ public class GameTime {
     seconds++;
     GameManager.getInstance().updateTime();
     checkNight();
-    // displayTime();
+    updateTimeProperty();
   }
 
-  private void displayTime() { System.out.println(formatTime(seconds)); }
+  private void updateTimeProperty() {
+    Platform.runLater(() -> { timeProperty.set(displayTime()); });
+  }
+
+  public StringProperty timeProperty() { return timeProperty; }
+
+  public String displayTime() { return formatTime(seconds); }
 
   public int getSeconds() { return seconds; }
 
