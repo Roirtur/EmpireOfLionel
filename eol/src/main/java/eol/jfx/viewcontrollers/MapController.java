@@ -9,11 +9,18 @@ import eol.jfx.buildings.BuildingType;
 import eol.jfx.managers.GameManager;
 import eol.jfx.managers.GridMap;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
 
 public class MapController {
 
@@ -22,6 +29,7 @@ public class MapController {
 
     private final Map<String, Image> imageCache = new HashMap<>();
     private final Map<String, Canvas> canvasCache = new HashMap<>();
+    private Popup currentPopup;
 
     @FXML
     public void initialize() {
@@ -58,7 +66,7 @@ public class MapController {
 
         if (GridMap.placeBuilding(building, col, row)) {
             GameManager.getInstance().addBuilding(building);
-            updateMapDisplay(col, row, building.getWidth(), building.getHeight());
+            updateMapDisplay(col, row, building.getWidth(), building.getHeight(), building);
         } else {
             System.out.println("Can't place building at " + row + ", " + col);
         }
@@ -94,13 +102,13 @@ public class MapController {
         }
     }
 
-    private void updateMapDisplay(int startX, int startY, int width, int height) {
+    private void updateMapDisplay(int startX, int startY, int width, int height, Building building) {
         boolean[][] map = GridMap.getGrid();
 
         for (int row = startY; row < startY + height; row++) {
             for (int col = startX; col < startX + width; col++) {
                 if (map[row][col]) {
-                    String buildingType = BuildingCreatorController.getSelectedBuilding().toLowerCase();
+                    String buildingType = building.getClass().getSimpleName().toLowerCase();
                     String imagePath = "/eol/img_no_bg/buildings/" + buildingType + ".png";
                     Image buildingImage = getCachedImage(imagePath);
 
@@ -124,12 +132,61 @@ public class MapController {
                         gc.setImageSmoothing(false); // Disable image smoothing
                         gc.drawImage(buildingImage, 0, 0, widthInPixels, heightInPixels);
 
-                        mapGrid.add(canvas, startX, startY, width, height);
+                        Button button = new Button();
+                        button.setGraphic(canvas);
+                        button.getStyleClass().add("image-button");
+
+                        button.setOnAction(event -> showBuildingPopup(building, button, widthInPixels));
+
+                        mapGrid.add(button, startX, startY, width, height);
                         canvasCache.put(startY + "," + startX, canvas);
                     }
                 }
             }
         }
+    }
+
+    private void showBuildingPopup(Building building, Button sourceButton, int widthInPixels) {
+        if (currentPopup != null) {
+            currentPopup.hide();
+        }
+
+        Popup popup = new Popup();
+        currentPopup = popup;
+
+        VBox popupContent = new VBox();
+        popupContent.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: black; -fx-border-width: 1;");
+        
+        Label buildingInfo = new Label("Building: " + building.getClass().getSimpleName() + "\n" +
+                                       "Position: (" + building.getX() + ", " + building.getY() + ")\n" +
+                                       "Size: " + building.getWidth() + "x" + building.getHeight());
+        Button actionButton = new Button("Perform Action");
+        actionButton.setOnAction(e -> {
+            // Perform some action
+            System.out.println("Action performed on building: " + building.getClass().getSimpleName());
+            popup.hide();
+        });
+
+        Button closeButton = new Button("Close");
+        closeButton.setOnAction(e -> popup.hide());
+
+        popupContent.getChildren().addAll(buildingInfo, actionButton, closeButton);
+        popup.getContent().add(popupContent);
+
+        // Calculate the position to show the popup next to the clicked button
+        Point2D buttonPosition = sourceButton.localToScene(0.0, 0.0);
+        double x = buttonPosition.getX() + sourceButton.getScene().getWindow().getX() + sourceButton.getScene().getX() + widthInPixels;
+        double y = buttonPosition.getY() + sourceButton.getScene().getWindow().getY() + sourceButton.getScene().getY();
+
+        popup.show(sourceButton.getScene().getWindow(), x, y);
+
+        // Close the popup if clicking elsewhere
+        Scene scene = sourceButton.getScene();
+        scene.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            if (!popup.getContent().contains((Node) event.getTarget())) {
+                popup.hide();
+            }
+        });
     }
 
     private Image getCachedImage(String path) {

@@ -64,8 +64,8 @@ public class ResourceController implements Observer {
                     Image image = getCachedImage(imagePath);
 
                     // Define the desired output width and height
-                    double outputWidth = 50; // Example width, you can set this to any value
-                    double outputHeight = 50; // Example height, you can set this to any value
+                    double outputWidth = 25; // Example width, you can set this to any value
+                    double outputHeight = 25; // Example height, you can set this to any value
 
                     Canvas canvas = new Canvas(outputWidth, outputHeight);
                     GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -74,8 +74,9 @@ public class ResourceController implements Observer {
 
                     int quantity = PlayerInventory.getRessourceQuantity(ressource);
                     Label quantityLabel = new Label(String.valueOf(quantity));
+                    Label nameLabel = new Label(fileName);
 
-                    VBox vbox = new VBox(canvas, quantityLabel);
+                    VBox vbox = new VBox(nameLabel, canvas, quantityLabel);
                     vbox.setSpacing(5);
                     resourceBox.getChildren().add(vbox);
                 }

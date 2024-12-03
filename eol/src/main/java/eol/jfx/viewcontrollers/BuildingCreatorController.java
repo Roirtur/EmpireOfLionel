@@ -1,7 +1,6 @@
 package eol.jfx.viewcontrollers;
 
 import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,8 +11,10 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class BuildingCreatorController {
 
@@ -73,12 +74,17 @@ public class BuildingCreatorController {
                     button.getStyleClass().add("image-button");
                     button.setOnAction(event -> setSelectedBuilding(button));
 
-                    buildingBox.getChildren().add(button);
+                    Label nameLabel = new Label(file.getName().replace(".png", "").toUpperCase());
+
+                    VBox vbox = new VBox(nameLabel, button);
+                    vbox.setSpacing(5);
+                    buildingBox.getChildren().add(vbox);
                 }
             } else {
                 System.err.println("No image files found in the building folder.");
             }
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
