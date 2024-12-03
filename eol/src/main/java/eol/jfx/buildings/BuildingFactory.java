@@ -18,7 +18,7 @@ public class BuildingFactory {
     public static Building createBuilding(BuildingType type, int x, int y) {
         switch (type) {
             case APARTMENT:
-                return new ApartmentBuilding(x, y);
+                return new Apartment(x, y);
             case CEMENTPLANT:
                 return new CementPlant(x, y);
             case FARM:
