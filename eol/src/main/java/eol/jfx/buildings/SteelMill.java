@@ -12,7 +12,7 @@ public class SteelMill extends Building {
     public final static BuildingType TYPE = BuildingType.STEELMILL;
 
     public SteelMill(int x, int y) {
-        super(x, y, 4, 3, 0, 40, 6, new HashMap<Ressource, Integer>() {
+        super(x, y, BuildingType.STEELMILL.getWidth(), BuildingType.STEELMILL.getHeight(), 0, 40, 6, new HashMap<Ressource, Integer>() {
             {
                 put(Ressource.WOOD, 100);
                 put(Ressource.STONE, 50);

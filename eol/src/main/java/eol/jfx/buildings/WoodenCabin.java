@@ -1,8 +1,9 @@
 package eol.jfx.buildings;
 
+import java.util.HashMap;
+
 import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.Ressource;
-import java.util.HashMap;
 
 public class WoodenCabin extends Building {
 
@@ -11,7 +12,7 @@ public class WoodenCabin extends Building {
   public final static BuildingType TYPE = BuildingType.WOODENCABIN;
 
   public WoodenCabin(int x, int y) {
-    super(x, y, 1, 1, 2, 2, 2, new HashMap<Ressource, Integer>() {
+    super(x, y, BuildingType.WOODENCABIN.getWidth(), BuildingType.WOODENCABIN.getHeight(), 2, 2, 2, new HashMap<Ressource, Integer>() {
       { put(Ressource.WOOD, 1); }
     });
   }

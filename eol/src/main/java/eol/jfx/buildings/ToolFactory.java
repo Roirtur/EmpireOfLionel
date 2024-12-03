@@ -12,7 +12,7 @@ public class ToolFactory extends Building {
     public final static BuildingType TYPE = BuildingType.TOOLFACTORY;
 
     public ToolFactory(int x, int y) {
-        super(x, y, 4, 3, 0, 12, 8, new HashMap<Ressource, Integer>() {
+        super(x, y, BuildingType.TOOLFACTORY.getWidth(), BuildingType.TOOLFACTORY.getHeight(), 0, 12, 8, new HashMap<Ressource, Integer>() {
             {
                 put(Ressource.WOOD, 50);
                 put(Ressource.STONE, 50);

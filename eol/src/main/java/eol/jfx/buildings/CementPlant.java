@@ -12,7 +12,7 @@ public class CementPlant extends Building {
     public final static BuildingType TYPE = BuildingType.CEMENTPLANT;
 
     public CementPlant(int x, int y) {
-        super(x, y, 4, 3, 0, 10, 4, new HashMap<Ressource, Integer>() {
+        super(x, y, BuildingType.CEMENTPLANT.getWidth(), BuildingType.CEMENTPLANT.getHeight(), 0, 10, 4, new HashMap<Ressource, Integer>() {
             {
                 put(Ressource.WOOD, 50);
                 put(Ressource.STONE, 50);

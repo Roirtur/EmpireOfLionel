@@ -43,7 +43,6 @@ public class MainController {
             GridPane.setVgrow(resourcesPane, Priority.ALWAYS);
 
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

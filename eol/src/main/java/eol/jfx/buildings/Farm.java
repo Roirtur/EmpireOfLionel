@@ -12,7 +12,7 @@ public class Farm extends Building {
     public final static BuildingType TYPE = BuildingType.FARM;
 
     public Farm(int x, int y) {
-        super(x, y, 3, 3, 5, 3, 1, new HashMap<Ressource, Integer>() {
+        super(x, y, BuildingType.FARM.getWidth(), BuildingType.FARM.getHeight(), 5, 3, 1, new HashMap<Ressource, Integer>() {
             {
                 put(Ressource.WOOD, 5);
                 put(Ressource.STONE, 5);

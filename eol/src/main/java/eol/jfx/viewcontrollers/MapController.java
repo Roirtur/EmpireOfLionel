@@ -9,9 +9,10 @@ import eol.jfx.buildings.BuildingType;
 import eol.jfx.managers.GameManager;
 import eol.jfx.managers.GridMap;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class MapController {
@@ -20,7 +21,7 @@ public class MapController {
     private GridPane mapGrid;
 
     private final Map<String, Image> imageCache = new HashMap<>();
-    private final Map<String, ImageView> imageViewCache = new HashMap<>();
+    private final Map<String, Canvas> canvasCache = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -66,27 +67,29 @@ public class MapController {
     private void initializeGrid() {
         int rows = GridMap.getHeight();
         int cols = GridMap.getWidth();
-        boolean[][] map = GridMap.getGrid();
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 Image ground = getCachedImage("/eol/img_no_bg/ground.png");
-                ImageView imageView = new ImageView(ground);
 
-                imageView.setFitWidth(50);
-                imageView.setFitHeight(50);
-                imageView.setPreserveRatio(true);
-                imageView.setSmooth(false);
+                // Define the desired output width and height
+                double outputWidth = 50; // Example width, you can set this to any value
+                double outputHeight = 50; // Example height, you can set this to any value
+
+                Canvas canvas = new Canvas(outputWidth, outputHeight);
+                GraphicsContext gc = canvas.getGraphicsContext2D();
+                gc.setImageSmoothing(false); // Disable image smoothing
+                gc.drawImage(ground, 0, 0, outputWidth, outputHeight);
 
                 Button button = new Button();
-                button.setGraphic(imageView);
+                button.setGraphic(canvas);
                 button.getStyleClass().add("image-button");
                 final int finalRow = row;
                 final int finalCol = col;
                 button.setOnAction(event -> putBuildingOnMap(finalRow, finalCol));
 
                 mapGrid.add(button, col, row);
-                imageViewCache.put(row + "," + col, imageView);
+                canvasCache.put(row + "," + col, canvas);
             }
         }
     }
@@ -102,18 +105,27 @@ public class MapController {
                     Image buildingImage = getCachedImage(imagePath);
 
                     if (buildingImage != null) {
-                        ImageView buildingImageView = imageViewCache.get(row + "," + col);
-                        if (buildingImageView == null) {
-                            buildingImageView = new ImageView(buildingImage);
-                            buildingImageView.setFitWidth(50);
-                            buildingImageView.setFitHeight(50);
-                            buildingImageView.setPreserveRatio(true);
-                            buildingImageView.setSmooth(false);
-                            mapGrid.add(buildingImageView, col, row);
-                            imageViewCache.put(row + "," + col, buildingImageView);
-                        } else {
-                            buildingImageView.setImage(buildingImage);
+                        int widthInPixels = width * 50;
+                        int heightInPixels = height * 50;
+
+                        // Remove existing canvases in the area
+                        for (int r = startY; r < startY + height; r++) {
+                            for (int c = startX; c < startX + width; c++) {
+                                Canvas existingCanvas = canvasCache.remove(r + "," + c);
+                                if (existingCanvas != null) {
+                                    mapGrid.getChildren().remove(existingCanvas);
+                                }
+                            }
                         }
+
+                        // Create a new canvas that spans multiple tiles
+                        Canvas canvas = new Canvas(widthInPixels, heightInPixels);
+                        GraphicsContext gc = canvas.getGraphicsContext2D();
+                        gc.setImageSmoothing(false); // Disable image smoothing
+                        gc.drawImage(buildingImage, 0, 0, widthInPixels, heightInPixels);
+
+                        mapGrid.add(canvas, startX, startY, width, height);
+                        canvasCache.put(startY + "," + startX, canvas);
                     }
                 }
             }
@@ -123,7 +135,7 @@ public class MapController {
     private Image getCachedImage(String path) {
         if (!imageCache.containsKey(path)) {
             try {
-                Image image = new Image(getClass().getResourceAsStream(path));
+                Image image = new Image(getClass().getResourceAsStream(path), 32, 32, false, false); // Disable smoothing and set dimensions
                 imageCache.put(path, image);
             } catch (Exception e) {
                 System.err.println("Image not found: " + path);
