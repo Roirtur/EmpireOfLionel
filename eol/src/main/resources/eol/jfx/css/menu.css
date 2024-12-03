@@ -1,24 +1,27 @@
-.vbox {
-    background-color: #161616;
-    -fx-background-color: #161616;
-    padding: 50px;
-    -fx-padding: 50px;
+/* General Styles */
+.root {
+    -fx-background-color: #ffffff;
+    -fx-font-family: 'Pixelated', sans-serif;
+    -fx-text-fill: #000;
 }
 
+/* Title Label */
 .title-label {
     font-size: 36px;
     -fx-font-size: 36px;
-    -fx-text-fill: #6A5ACD;
+    -fx-text-fill: #000;
     font-weight: bold;
     -fx-font-weight: bold;
+    text-align: center;
 }
 
+/* Menu Button */
 .menu-button {
     font-size: 18px;
     -fx-font-size: 18px;
-    -fx-text-fill: #FFFFFF;
-    background-color: #7B68EE;
-    -fx-background-color: #7B68EE;
+    -fx-text-fill: #000000;
+    background-color: #ffffff;
+    -fx-background-color: #ffffff;
     padding: 10px 20px;
     -fx-padding: 10px 20px;
     border-radius: 5px;
@@ -28,15 +31,119 @@
     -fx-min-width: 200px;
     transition: all 0.3s ease;
     -fx-transition: all 0.3s ease;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 10, 0.5, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.25), 10, 0.5, 0, 0);
 }
 
 .menu-button:hover {
-    background-color: #9370DB;
-    -fx-background-color: #9370DB;
+    background-color: #cccccc;
+    -fx-background-color: #cccccc;
 }
 
 .menu-button:pressed {
-    background-color: #6A5ACD;
-    -fx-background-color: #6A5ACD;
+    background-color: #aaaaaa;
+    -fx-background-color: #aaaaaa;
+}
+
+/* VBox */
+.vbox {
+    background-color: #fff;
+    -fx-background-color: #fff;
+    padding: 50px;
+    -fx-padding: 50px;
+    alignment: center;
+    -fx-alignment: center;
+}
+
+/* HBox */
+.hbox {
+    background-color: #fff;
+    -fx-background-color: #fff;
+    padding: 10px;
+    -fx-padding: 10px;
+    alignment: center;
+    -fx-alignment: center;
+    spacing: 10px;
+    -fx-spacing: 10px;
+}
+
+/* Image Button */
+.image-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.building-selected {
+    -fx-border-color: #000;
+    -fx-border-width: 2;
+}
+
+/* Resource Box */
+#resourceBox {
+    spacing: 10px;
+    -fx-spacing: 10px;
+    alignment: top_right;
+    -fx-alignment: top_right;
+}
+
+/* Add Resident Button */
+#addResidentButton {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #000000;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+}
+
+#addResidentButton:hover {
+    -fx-background-color: #cccccc;
+}
+
+#residentCountField {
+    -fx-border-color: #000;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000;
+    -fx-background-color: #fff;
+}
+
+/* Alert */
+.alert {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .title-label {
+        font-size: 24px;
+        -fx-font-size: 24px;
+    }
+
+    .menu-button {
+        font-size: 14px;
+        -fx-font-size: 14px;
+        min-width: 150px;
+        -fx-min-width: 150px;
+    }
+
+    .vbox {
+        padding: 20px;
+        -fx-padding: 20px;
+    }
+
+    .hbox {
+        padding: 5px;
+        -fx-padding: 5px;
+        spacing: 5px;
+        -fx-spacing: 5px;
+    }
 }

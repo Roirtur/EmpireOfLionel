@@ -2,10 +2,6 @@ package eol.jfx;
 
 import java.io.IOException;
 
-import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.managers.GameManager;
-import eol.jfx.ressources.InventoryInitiator;
-import eol.jfx.ressources.PlayerInventory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,28 +13,18 @@ import javafx.stage.Stage;
  */
 public class App extends Application {
 
-    private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
-        InventoryInitiator.initializeInventory(Difficulty.GODMOD);
-        PlayerInventory.print();
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/eol/jfx/main.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root, 720, 480); // Set initial window size to 720x480
 
-        scene = new Scene(loadFXML("main"), 1200, 800);
+        stage.setTitle("Empire Of Lionel");
         stage.setScene(scene);
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader
-                = new FXMLLoader(App.class.getResource("/eol/jfx/" + fxml + ".fxml"));
-        return fxmlLoader.load();
-    }
-
     public static void main(String[] args) {
-        GameManager.startGame();
         launch();
-        // Exits the program
-        System.exit(0);
     }
 }

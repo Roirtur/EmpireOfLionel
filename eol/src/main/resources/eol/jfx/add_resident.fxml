@@ -9,7 +9,7 @@
       fx:controller="eol.jfx.viewcontrollers.AddResidentController"
       alignment="CENTER"
       spacing="10"
-      stylesheets="@css/add_resident.css">
+      stylesheets="@css/menu.css">
     <HBox spacing="10" alignment="CENTER" style="-fx-padding: 0 0 0 20;">
         <TextField fx:id="residentCountField" promptText="nbr of residents" id="residentCountField"/>
         <Button text="+" onAction="#handleAddResident" id="addResidentButton"/>

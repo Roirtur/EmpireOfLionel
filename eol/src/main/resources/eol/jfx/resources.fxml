@@ -6,7 +6,8 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="eol.jfx.viewcontrollers.ResourceController"
-      alignment="TOP_RIGHT">
+      alignment="TOP_RIGHT"
+      stylesheets="@css/menu.css">
     <VBox fx:id="resourceBox" spacing="10" alignment="TOP_RIGHT">
         <!-- Les labels des ressources seront ajoutés ici par le contrôleur -->
     </VBox>
