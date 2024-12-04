@@ -120,7 +120,8 @@ public class BuildingCreatorController {
                       false); // Disable smoothing and set dimensions
         imageCache.put(path, image);
       } catch (Exception e) {
-        System.err.println("Image not found: " + path);
+        System.err.println("BuildingCreatorController - Image not found: " +
+                           path);
         return null;
       }
     }

@@ -1,6 +1,7 @@
 package eol.jfx.managers;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import eol.jfx.buildings.Building;
@@ -30,7 +31,7 @@ public class GameManager {
     private static volatile GameManager instance;
 
     // Variable to store the selected difficulty
-    private static Difficulty selectedDifficulty = Difficulty.EASY;
+    private static Difficulty selectedDifficulty = Difficulty.GODMOD;
 
     // Private constructor to prevent instantiation
     private GameManager() {
@@ -130,6 +131,10 @@ public class GameManager {
             throw new IllegalStateException(
                     "Not enough place where a resident can stay");
         }
+        // Check for enough food
+        if (PlayerInventory.getRessourceQuantity(Ressource.FOOD) < quantity) {
+            throw new IllegalStateException("Not enough food available");
+        }
 
         for (int i = 0; i < quantity; i++) {
             addResident();
@@ -142,6 +147,10 @@ public class GameManager {
             throw new IllegalStateException(
                     "Not enough place where a resident can stay");
         }
+        // Check for enough food
+        if (PlayerInventory.getRessourceQuantity(Ressource.FOOD) < 1) {
+            throw new IllegalStateException("Not enough food available");
+        }
 
         Resident resident = new Resident();
         getInstance().addResident(resident);
@@ -150,13 +159,18 @@ public class GameManager {
     private void addResident(Resident resident) {
         residents.add(resident);
         unemployed_residents.add(resident);
-        System.out.println("Resident added");
+        // System.out.println("Resident added");
+    }
+
+    public static void removeResidentStatic(Resident resident) {
+        getInstance().removeResident(resident);
     }
 
     public void removeResident(Resident resident) {
         residents.remove(resident);
         unemployed_residents.remove(resident);
         working_residents.remove(resident);
+        PlayerInventory.useRessource(Ressource.RESIDENTS);
     }
 
     public static void assignWorkerToBuilding(Building building) {
@@ -236,13 +250,19 @@ public class GameManager {
             return;
         }
 
-        if (GameTime.isNight()) {
-            for (Resident resident : residents) {
+        Iterator<Resident> iterator = residents.iterator();
+        while (iterator.hasNext()) {
+            Resident resident = iterator.next();
+            if (GameTime.isNight()) {
                 resident.updateNight();
-            }
-        } else {
-            for (Resident resident : residents) {
+            } else {
                 resident.updateDay();
+            }
+            if (!resident.isAlive()) {
+                iterator.remove();
+                unemployed_residents.remove(resident);
+                working_residents.remove(resident);
+                PlayerInventory.useRessource(Ressource.RESIDENTS);
             }
         }
     }
