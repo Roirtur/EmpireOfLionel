@@ -1,12 +1,13 @@
 package eol.jfx.buildings;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 import eol.jfx.managers.GridMap;
 import eol.jfx.residents.Resident;
 import eol.jfx.residents.works.WorkType;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import java.util.HashMap;
-import java.util.Stack;
 
 public abstract class Building {
 
@@ -61,7 +62,7 @@ public abstract class Building {
     this.constructionCost = constructionCost;
 
     System.out.println("Building created");
-    build();
+    // build();
   }
 
   private boolean isBuildable() {
@@ -75,7 +76,7 @@ public abstract class Building {
     return enoughRessources;
   }
 
-  private void build() {
+  public void build() {
     // Check if the building is buildable
     if (!isBuildable()) {
       // Throw an exception
@@ -232,8 +233,7 @@ public abstract class Building {
     if (!PlayerInventory.hasEnoughRessources(upgradeCost)) {
       // Throw an exception
       throw new IllegalArgumentException(
-          "The player does not have enough ressources to upgrade the "
-          + "building");
+          "The player does not have enough ressources");
     }
 
     // Remove the ressources from the player inventory
