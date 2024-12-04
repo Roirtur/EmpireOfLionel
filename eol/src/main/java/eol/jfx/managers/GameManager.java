@@ -132,7 +132,7 @@ public class GameManager {
   private void addResident(Resident resident) {
     residents.add(resident);
     unemployed_residents.add(resident);
-    System.out.println("Resident added");
+    // System.out.println("Resident added");
   }
 
   public void removeResident(Resident resident) {
@@ -204,9 +204,9 @@ public class GameManager {
     if (night_updated) {
       night_updated = false;
       if (GameTime.isNight()) {
-        System.out.println("Night time");
+        // System.out.println("Night time");
       } else {
-        System.out.println("Day time");
+        // System.out.println("Day time");
       }
     }
   }

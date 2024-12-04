@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -86,13 +87,16 @@ public class ResourceController implements Observer {
         System.err.println("No image files found in the resource folder.");
       }
     } catch (URISyntaxException e) {
+      e.printStackTrace();
     }
   }
 
   @Override
   public void update() {
-    resourceBox.getChildren().clear();
-    initializeResources();
+    Platform.runLater(() -> {
+      resourceBox.getChildren().clear();
+      initializeResources();
+    });
   }
 
   private Image getCachedImage(String path) {
@@ -103,7 +107,7 @@ public class ResourceController implements Observer {
                       false); // Disable smoothing and set dimensions
         imageCache.put(path, image);
       } catch (Exception e) {
-        System.err.println("Image not found: " + path);
+        System.err.println("ResourceController - Image not found: " + path);
         return null;
       }
     }
