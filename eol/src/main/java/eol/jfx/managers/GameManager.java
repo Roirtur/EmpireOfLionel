@@ -3,7 +3,9 @@ package eol.jfx.managers;
 import eol.jfx.buildings.Building;
 import eol.jfx.buildings.BuildingFactory;
 import eol.jfx.buildings.BuildingType;
+import eol.jfx.gamesettings.Difficulty;
 import eol.jfx.residents.Resident;
+import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
 import java.util.ArrayList;
@@ -26,6 +28,9 @@ public class GameManager {
   // The single instance of the class
   private static volatile GameManager instance;
 
+  // Variable to store the selected difficulty
+  private static Difficulty selectedDifficulty = Difficulty.EASY;
+
   // Private constructor to prevent instantiation
   private GameManager() { GameTime.getInstance(); }
 
@@ -44,7 +49,8 @@ public class GameManager {
   }
 
   public static void startGame() {
-    System.out.println("Game started");
+    System.out.println("Game started with difficulty: " + selectedDifficulty);
+    InventoryInitiator.initializeInventory(selectedDifficulty);
     GameTime.getInstance().startTimer();
 
     getInstance().gameThread.start();
@@ -53,6 +59,10 @@ public class GameManager {
   public static void stopGame() {
     running = false;
     GameTime.getInstance().stopTimer();
+  }
+
+  public static void setSelectedDifficulty(Difficulty difficulty) {
+    selectedDifficulty = difficulty;
   }
 
   private synchronized void lauchGame() {

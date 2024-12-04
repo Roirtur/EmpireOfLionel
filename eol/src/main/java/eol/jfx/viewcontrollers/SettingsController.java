@@ -1,7 +1,7 @@
 package eol.jfx.viewcontrollers;
 
 import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.ressources.InventoryInitiator;
+import eol.jfx.managers.GameManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,7 +29,7 @@ public class SettingsController implements Initializable {
   private void handleSave() {
     String selectedDifficulty = difficultyComboBox.getValue();
     Difficulty difficulty = Difficulty.valueOf(selectedDifficulty);
-    InventoryInitiator.initializeInventory(difficulty);
+    GameManager.setSelectedDifficulty(difficulty);
 
     // Go back to the menu
     handleBack();

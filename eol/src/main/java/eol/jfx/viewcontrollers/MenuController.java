@@ -1,8 +1,6 @@
 package eol.jfx.viewcontrollers;
 
-import eol.jfx.gamesettings.Difficulty;
 import eol.jfx.managers.GameManager;
-import eol.jfx.ressources.InventoryInitiator;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +16,6 @@ public class MenuController {
   @FXML
   private void handleStartGame() {
     try {
-      // Initialize inventory with EASY difficulty by default
-      InventoryInitiator.initializeInventory(Difficulty.EASY);
       GameManager.startGame(); // Start the game
 
       FXMLLoader fxmlLoader =
