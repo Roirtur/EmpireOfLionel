@@ -24,14 +24,17 @@ public class AddResidentController {
 
     @FXML
     private void handleAddResident() {
-        int residentCount = 1; // Default value
+        int residentCount; // Default value
         try {
             if (residentCountField.getText().isEmpty()) {
                 showAlert("Error", "Please enter a number.");
+                return;
             } else if (Integer.parseInt(residentCountField.getText()) < 1) {
                 showAlert("Error", "Please enter a number greater than 0.");
+                return;
             } else if (Integer.parseInt(residentCountField.getText()) > 100) {
                 showAlert("Error", "Please enter a number less than 100.");
+                return;
             }
             residentCount = Integer.parseInt(residentCountField.getText());
 
@@ -41,7 +44,11 @@ public class AddResidentController {
         }
 
         if (residentCount > 0 && residentCount <= 100) {
-            GameManager.addResident(residentCount);
+            try {
+                GameManager.addResident(residentCount);
+            } catch (IllegalStateException e) {
+                showAlert("Error", e.getMessage());
+            }
         }
     }
 
