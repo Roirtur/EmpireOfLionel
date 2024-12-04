@@ -1,18 +1,14 @@
 package eol.jfx.viewcontrollers;
 
 import eol.jfx.gamesettings.Difficulty;
-import eol.jfx.ressources.InventoryInitiator;
-import java.io.IOException;
+import eol.jfx.gamesettings.SceneManager;
+import eol.jfx.managers.GameManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
 
 public class SettingsController implements Initializable {
 
@@ -29,7 +25,7 @@ public class SettingsController implements Initializable {
   private void handleSave() {
     String selectedDifficulty = difficultyComboBox.getValue();
     Difficulty difficulty = Difficulty.valueOf(selectedDifficulty);
-    InventoryInitiator.initializeInventory(difficulty);
+    GameManager.setSelectedDifficulty(difficulty);
 
     // Go back to the menu
     handleBack();
@@ -37,19 +33,6 @@ public class SettingsController implements Initializable {
 
   @FXML
   private void handleBack() {
-    try {
-      FXMLLoader fxmlLoader =
-          new FXMLLoader(getClass().getResource("/eol/jfx/menu.fxml"));
-      Parent root = fxmlLoader.load();
-      Scene scene =
-          new Scene(root, 720, 480); // Set initial window size to 720x480
-
-      // Get the current stage from the difficultyComboBox
-      Stage stage = (Stage)difficultyComboBox.getScene().getWindow();
-      stage.setScene(scene);
-      stage.show();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    SceneManager.getInstance().showScene("menu");
   }
 }
