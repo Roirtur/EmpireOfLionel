@@ -41,7 +41,7 @@ public class InventoryInitiator {
                 PlayerInventory.setRessourceQuantity(Ressource.LUMBER, 10000);
                 PlayerInventory.setRessourceQuantity(Ressource.TOOLS, 10000);
                 PlayerInventory.setRessourceQuantity(Ressource.STEEL, 10000);
-                PlayerInventory.setRessourceQuantity(Ressource.MAXRESIDENTS, 10000);
+                PlayerInventory.setRessourceQuantity(Ressource.MAXRESIDENTS, 3000);
                 break;
         }
     }

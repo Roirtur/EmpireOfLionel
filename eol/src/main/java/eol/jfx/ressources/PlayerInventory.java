@@ -1,9 +1,10 @@
 package eol.jfx.ressources;
 
-import eol.jfx.observers.Observer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import eol.jfx.observers.Observer;
 import javafx.application.Platform;
 
 public class PlayerInventory {
