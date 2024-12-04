@@ -13,6 +13,17 @@ public class AddResidentController {
   @FXML private TextField residentCountField;
 
   @FXML
+  public void initialize() {
+    // Add a listener to restrict input to digits only
+    residentCountField.textProperty().addListener(
+        (observable, oldValue, newValue) -> {
+          if (!newValue.matches("\\d*")) {
+            residentCountField.setText(newValue.replaceAll("[^\\d]", ""));
+          }
+        });
+  }
+
+  @FXML
   private void handleAddResident() {
     int residentCount = 1; // Default value
     try {
