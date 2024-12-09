@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-import eol.jfx.managers.GridMap;
+import eol.jfx.managers.GameManager;
 import eol.jfx.observers.Observer;
 import eol.jfx.residents.Resident;
 import eol.jfx.residents.works.WorkType;
@@ -106,16 +106,22 @@ public abstract class Building {
     }
 
     public void remove() {
-        // Remove the building
-        exists = false;
         // Reassign a portion of the construction cost back to the player
         for (Ressource ressource : constructionCost.keySet()) {
             int quantity = constructionCost.get(ressource);
             int refundQuantity = (int) (quantity * 0.5); // Refund 50% of the resources
             PlayerInventory.productRessource(ressource, refundQuantity);
         }
-        // Remove the building from the grid
-        GridMap.removeBuilding(this);
+        
+        // Fire all the workers
+        while (!residentPile.isEmpty()) {
+            GameManager.removeWorkerFromBuilding(this);
+        }
+        
+        // Don't do anything if residents exceed maxResidents after removing the building
+
+        // Remove the building
+        exists = false;
     }
 
     public int getWidth() {
@@ -201,6 +207,8 @@ public abstract class Building {
 
         // Remove a worker
         currentWorkers--;
+        // Give back the tools
+        PlayerInventory.productRessource(Ressource.TOOLS);
         return residentPile.pop();
     }
 
@@ -279,5 +287,21 @@ public abstract class Building {
                 constructionProgress++;
             }
         }
+    }
+
+    public int getMaxResidents() {
+        return maxResidents;
+    }
+
+    public int getCurrentResidents() {
+        return currentResidents;
+    }
+
+    public int getMaxWorkers() {
+        return maxWorkers;
+    }
+
+    public int getCurrentWorkers() {
+        return currentWorkers;
     }
 }

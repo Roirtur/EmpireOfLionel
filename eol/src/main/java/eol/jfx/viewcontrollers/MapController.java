@@ -84,8 +84,8 @@ public class MapController implements Observer {
                 Image ground = getCachedImage("/eol/img_no_bg/ground.png");
 
                 // Define the desired output width and height
-                double outputWidth = 50; // Example width, you can set this to any value
-                double outputHeight = 50; // Example height, you can set this to any value
+                double outputWidth = 50;
+                double outputHeight = 50;
 
                 Canvas canvas = new Canvas(outputWidth, outputHeight);
                 GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -118,6 +118,43 @@ public class MapController implements Observer {
     private void updateMapDisplay(int startX, int startY, int width, int height, Building building) {
         boolean[][] map = GridMap.getGrid();
 
+        // if building is null, remove the building from the map
+        // but keep the ground tile and make it clickable to later place a new building
+        if (building == null) {
+            System.out.println("Removing building at " + startY + ", " + startX);
+            for (int row = startY; row < startY + height; row++) {
+                for (int col = startX; col < startX + width; col++) {
+                    final int currentRow = row;
+                    final int currentCol = col;
+                    mapGrid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == currentRow && GridPane.getColumnIndex(node) == currentCol);
+                    // Remove the canvas from the cache
+                    canvasCache.remove(row + "," + col);
+                    // Set back the ground tile
+                    Image ground = getCachedImage("/eol/img_no_bg/ground.png");
+
+                    // Define the desired output width and height
+                    double outputWidth = 50;
+                    double outputHeight = 50; 
+
+                    Canvas canvas = new Canvas(outputWidth, outputHeight);
+                    GraphicsContext gc = canvas.getGraphicsContext2D();
+                    gc.setImageSmoothing(false); // Disable image smoothing
+                    gc.drawImage(ground, 0, 0, outputWidth, outputHeight);
+
+                    Button button = new Button();
+                    button.setGraphic(canvas);
+                    button.getStyleClass().add("image-button");
+                    final int finalRow = row;
+                    final int finalCol = col;
+                    button.setOnAction(event -> putBuildingOnMap(finalRow, finalCol));
+
+                    mapGrid.add(button, col, row);
+                    canvasCache.put(row + "," + col, canvas);
+                }
+            }
+            return;
+        }
+
         for (int row = startY; row < startY + height; row++) {
             for (int col = startX; col < startX + width; col++) {
                 if (map[row][col]) {
@@ -128,16 +165,6 @@ public class MapController implements Observer {
                     if (buildingImage != null) {
                         int widthInPixels = width * 50 - 4;
                         int heightInPixels = height * 50 - 4;
-
-                        // Remove existing canvases in the area
-                        for (int r = startY; r < startY + height; r++) {
-                            for (int c = startX; c < startX + width; c++) {
-                                Canvas existingCanvas = canvasCache.remove(r + "," + c);
-                                if (existingCanvas != null) {
-                                    mapGrid.getChildren().remove(existingCanvas);
-                                }
-                            }
-                        }
 
                         // Create a new canvas that spans multiple tiles
                         Canvas canvas = new Canvas(widthInPixels, heightInPixels);
@@ -175,20 +202,52 @@ public class MapController implements Observer {
         VBox popupContent = new VBox();
         popupContent.setStyle("-fx-background-color: white; -fx-padding: 10; -fx-border-color: black; -fx-border-width: 1;");
 
-        Label buildingInfo = new Label("Building: " + building.getClass().getSimpleName() + "\n"
-                + "Position: (" + building.getX() + ", " + building.getY() + ")\n"
-                + "Size: " + building.getWidth() + "x" + building.getHeight());
-        Button actionButton = new Button("Perform Action");
-        actionButton.setOnAction(e -> {
-            // Perform some action
-            System.out.println("Action performed on building: " + building.getClass().getSimpleName());
+        Label buildingInfo = new Label();
+        updateBuildingInfo(building, buildingInfo);
+
+        Button addWorkerButton = new Button("Add Worker");
+        Button removeWorkerButton = new Button("Remove Worker");
+
+        addWorkerButton.setOnAction(e -> {
+            try {
+                GameManager.assignWorkerToBuilding(building);
+                System.out.println("Worker added to building: " + building.getClass().getSimpleName());
+                updateBuildingInfo(building, buildingInfo);
+                updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
+            } catch (IllegalStateException ex) {
+                System.err.println("Error adding worker: " + ex.getMessage());
+            }
+        });
+
+        removeWorkerButton.setOnAction(e -> {
+            try {
+                GameManager.removeWorkerFromBuilding(building);
+                System.out.println("Worker removed from building: " + building.getClass().getSimpleName());
+                updateBuildingInfo(building, buildingInfo);
+                updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
+            } catch (IllegalStateException ex) {
+                System.err.println("Error removing worker: " + ex.getMessage());
+            }
+        });
+
+        Button destroyButton = new Button("Destroy Building");
+        destroyButton.setOnAction(e -> {
+            try {
+                GameManager.removeBuilding(building.getX(), building.getY());
+                updateMapDisplay(building.getX(), building.getY(), building.getWidth(), building.getHeight(), null);
+                System.out.println("Building destroyed: " + building.getClass().getSimpleName());
+            } catch (IllegalStateException ex) {
+                System.err.println("Error destroying building: " + ex.getMessage());
+            }
             popup.hide();
         });
 
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> popup.hide());
 
-        popupContent.getChildren().addAll(buildingInfo, actionButton, closeButton);
+        updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
+
+        popupContent.getChildren().addAll(buildingInfo, addWorkerButton, removeWorkerButton, destroyButton, closeButton);
         popup.getContent().add(popupContent);
 
         // Calculate the position to show the popup next to the clicked button
@@ -205,6 +264,19 @@ public class MapController implements Observer {
                 popup.hide();
             }
         });
+    }
+
+    private void updateBuildingInfo(Building building, Label buildingInfo) {
+        String info = "Building: " + building.getClass().getSimpleName() + "\n";
+        info += "Position: " + building.getX() + ", " + building.getY() + "\n";
+        info += "Residents capacity: " + building.getMaxResidents() + "\n";
+        info += "Workers: " + building.getCurrentWorkers() + "/" + building.getMaxWorkers() + "\n";
+        buildingInfo.setText(info);
+    }
+
+    private void updateWorkerButtons(Building building, Button addWorkerButton, Button removeWorkerButton) {
+        addWorkerButton.setVisible(building.getCurrentWorkers() < building.getMaxWorkers());
+        removeWorkerButton.setVisible(building.getCurrentWorkers() > 0);
     }
 
     private Image getCachedImage(String path) {

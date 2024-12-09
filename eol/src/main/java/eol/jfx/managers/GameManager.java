@@ -120,8 +120,8 @@ public class GameManager {
     }
 
     public void removeBuilding(Building building) {
-        buildings.remove(building);
         GridMap.removeBuilding(building);
+        buildings.remove(building);
         building.remove();
     }
 
@@ -209,6 +209,9 @@ public class GameManager {
 
     private void FireWorkerFromBuilding(Building building) {
         Resident worker = building.fireWorker();
+        if (worker == null) {
+            throw new IllegalStateException("No worker in the building");
+        }
         // Moves the worker back to the unemployed list
         unemployed_residents.add(worker);
         working_residents.remove(worker);
