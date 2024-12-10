@@ -72,7 +72,6 @@ public abstract class Building {
         this.width = width;
         this.height = height;
         this.maxResidents = maxResidents;
-        PlayerInventory.productRessource(Ressource.MAXRESIDENTS, maxResidents);
 
         this.currentResidents = 0;
         this.maxWorkers = maxWorkers;
@@ -112,14 +111,13 @@ public abstract class Building {
             int refundQuantity = (int) (quantity * 0.5); // Refund 50% of the resources
             PlayerInventory.productRessource(ressource, refundQuantity);
         }
-        
+
         // Fire all the workers
         while (!residentPile.isEmpty()) {
             GameManager.removeWorkerFromBuilding(this);
         }
-        
-        // Don't do anything if residents exceed maxResidents after removing the building
 
+        // Don't do anything if residents exceed maxResidents after removing the building
         // Remove the building
         exists = false;
     }
@@ -281,6 +279,7 @@ public abstract class Building {
             // Check if the building is built
             if (constructionProgress >= constructionTime) {
                 isBuilt = true;
+                PlayerInventory.productRessource(Ressource.MAXRESIDENTS, maxResidents);
                 System.out.println("Building is built");
                 notifyObservers();
             } else {
