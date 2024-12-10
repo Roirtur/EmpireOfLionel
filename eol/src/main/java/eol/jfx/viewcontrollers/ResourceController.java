@@ -11,16 +11,18 @@ import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 
 public class ResourceController implements Observer {
 
     @FXML
-    private VBox resourceBox;
+    private FlowPane resourceBox;
 
     private final Map<String, Image> imageCache = new HashMap<>();
 
@@ -31,6 +33,10 @@ public class ResourceController implements Observer {
         } else {
             System.out.println("resourceBox is properly injected.");
             preloadImages();
+            resourceBox.setHgap(20);
+            resourceBox.setVgap(20);
+            resourceBox.setPrefHeight(200);
+
             initializeResources();
             PlayerInventory.registerObserver(this); // Register as observer
         }
@@ -87,9 +93,12 @@ public class ResourceController implements Observer {
                     }
 
                     Label quantityLabel = new Label(labelText);
+                    Label nameLabel = new Label(ressource.toString());
 
-                    VBox vbox = new VBox(canvas, quantityLabel);
+                    VBox vbox = new VBox(nameLabel, canvas, quantityLabel);
                     vbox.setSpacing(5);
+                    vbox.setPrefWidth(85);
+                    vbox.setAlignment(Pos.CENTER);
                     resourceBox.getChildren().add(vbox);
                 }
             } else {

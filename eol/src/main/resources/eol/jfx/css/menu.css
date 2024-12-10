@@ -84,14 +84,6 @@
   -fx-effect: dropshadow(one-pass-box, rgba(255, 255, 255, 1), 10, 0.1, 0, 0);
 }
 
-/* Resource Box */
-#resourceBox {
-  spacing: 10px;
-  -fx-spacing: 10px;
-  alignment: top_right;
-  -fx-alignment: top_right;
-}
-
 /* Add Resident Button */
 #addResidentButton {
   -fx-background-color: #ffffff;

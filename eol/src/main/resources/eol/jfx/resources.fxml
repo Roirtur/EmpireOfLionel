@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 
 <HBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="eol.jfx.viewcontrollers.ResourceController"
-      alignment="TOP_RIGHT"
-      stylesheets="@css/menu.css">
-    <VBox fx:id="resourceBox" spacing="10" alignment="TOP_RIGHT">
-        <!-- Les labels des ressources seront ajoutés ici par le contrôleur -->
-    </VBox>
+    fx:controller="eol.jfx.viewcontrollers.ResourceController"
+    stylesheets="@css/menu.css">
+    <FlowPane fx:id="resourceBox" xmlns:fx="http://javafx.com/fxml" alignment="TOP_LEFT"
+        style="-fx-border-color: black; -fx-border-width: 1; -fx-padding: 10;">
+        <!-- Other UI elements -->
+    </FlowPane>
 </HBox>
