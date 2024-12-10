@@ -1,5 +1,6 @@
 package eol.jfx.viewcontrollers;
 
+import eol.jfx.buildings.BuildingType;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -66,15 +67,12 @@ public class BuildingCreatorController {
           String imagePath = "/eol/img_no_bg/buildings/" + file.getName();
           Image image = getCachedImage(imagePath);
 
-          // Define the desired output width and height
-          double outputWidth =
-              50; // Example width, you can set this to any value
-          double outputHeight =
-              50; // Example height, you can set this to any value
+          double outputWidth = 50;
+          double outputHeight = 50;
 
           Canvas canvas = new Canvas(outputWidth, outputHeight);
           GraphicsContext gc = canvas.getGraphicsContext2D();
-          gc.setImageSmoothing(false); // Disable image smoothing
+          gc.setImageSmoothing(false);
           gc.drawImage(image, 0, 0, outputWidth, outputHeight);
 
           Button button = new Button();
@@ -84,15 +82,12 @@ public class BuildingCreatorController {
 
           button.setOnAction(event -> setSelectedBuilding(button));
 
-          // Add tooltip to button
           Tooltip tooltip = createTooltip(button.getId());
-          button.setTooltip(
-              tooltip); // Use setTooltip instead of Tooltip.install
+          button.setTooltip(tooltip);
 
-          // Add mouse event listeners to adjust tooltip position
           button.addEventHandler(MouseEvent.MOUSE_MOVED, event -> {
-            tooltip.setX(event.getScreenX() + 10); // Adjust X position
-            tooltip.setY(event.getScreenY() + 10); // Adjust Y position
+            tooltip.setX(event.getScreenX() + 10);
+            tooltip.setY(event.getScreenY() + 10);
           });
 
           Label nameLabel =
@@ -132,24 +127,20 @@ public class BuildingCreatorController {
   private Tooltip createTooltip(String buildingType) {
     Tooltip tooltip = new Tooltip();
     VBox vbox = new VBox();
-    vbox.setSpacing(10); // Increase spacing for larger elements
+    vbox.setSpacing(10);
 
-    // Example construction costs, replace with actual costs
-    HashMap<String, Integer> constructionCost =
-        getConstructionCost(buildingType);
+    Map<String, Integer> constructionCost = getConstructionCost(buildingType);
 
     for (Map.Entry<String, Integer> entry : constructionCost.entrySet()) {
       HBox hbox = new HBox();
-      hbox.setSpacing(10); // Increase spacing for larger elements
+      hbox.setSpacing(10);
 
-      // Define larger dimensions for the image and background
-      double imageSize = 40; // Example size, you can set this to any value
+      double imageSize = 40;
 
       ImageView imageView = new ImageView(getResourceImage(entry.getKey()));
       imageView.setFitWidth(imageSize);
       imageView.setFitHeight(imageSize);
 
-      // Add a white background behind the image
       Rectangle background = new Rectangle(imageSize, imageSize);
       background.setFill(Color.WHITE);
 
@@ -157,60 +148,25 @@ public class BuildingCreatorController {
       stackPane.getChildren().addAll(background, imageView);
 
       Label quantityLabel = new Label(entry.getValue().toString());
-      quantityLabel.setStyle(
-          "-fx-font-size: 16px;"); // Increase font size for better visibility
+      quantityLabel.setStyle("-fx-font-size: 16px;");
 
       hbox.getChildren().addAll(stackPane, quantityLabel);
       vbox.getChildren().add(hbox);
     }
 
     tooltip.setGraphic(vbox);
-    tooltip.setShowDelay(
-        Duration.ZERO); // Set show delay to zero using javafx.util.Duration
+    tooltip.setShowDelay(Duration.ZERO);
     return tooltip;
   }
 
-  private HashMap<String, Integer> getConstructionCost(String buildingType) {
-    HashMap<String, Integer> constructionCost = new HashMap<>();
-    switch (buildingType) {
-    case "house":
-      constructionCost.put("Wood", 2);
-      constructionCost.put("Stone", 2);
-      break;
-    case "lumbermill":
-      constructionCost.put("Wood", 50);
-      constructionCost.put("Stone", 50);
-      break;
-    case "quary":
-      constructionCost.put("Wood", 50);
-      break;
-    case "steelmill":
-      constructionCost.put("Wood", 100);
-      constructionCost.put("Stone", 50);
-      break;
-    case "toolfactory":
-      constructionCost.put("Wood", 50);
-      constructionCost.put("Stone", 50);
-      break;
-    case "woodencabin":
-      constructionCost.put("Wood", 1);
-      break;
-    case "farm":
-      constructionCost.put("Wood", 5);
-      constructionCost.put("Stone", 5);
-      break;
-    case "cementplant":
-      constructionCost.put("Wood", 50);
-      constructionCost.put("Stone", 50);
-      break;
-    case "apartment":
-      constructionCost.put("Wood", 50);
-      constructionCost.put("Stone", 50);
-      break;
-    default:
+  private Map<String, Integer> getConstructionCost(String buildingType) {
+    try {
+      BuildingType type = BuildingType.valueOf(buildingType.toUpperCase());
+      return type.getConstructionMap();
+    } catch (IllegalArgumentException e) {
       System.err.println("Building type not found: " + buildingType);
+      return new HashMap<>();
     }
-    return constructionCost;
   }
 
   private Image getResourceImage(String resourceName) {
@@ -222,9 +178,8 @@ public class BuildingCreatorController {
   private Image getCachedImage(String path) {
     if (!imageCache.containsKey(path)) {
       try {
-        Image image =
-            new Image(getClass().getResourceAsStream(path), 32, 32, false,
-                      false); // Disable smoothing and set dimensions
+        Image image = new Image(getClass().getResourceAsStream(path), 32, 32,
+                                false, false);
         imageCache.put(path, image);
       } catch (Exception e) {
         System.err.println("BuildingCreatorController - Image not found: " +

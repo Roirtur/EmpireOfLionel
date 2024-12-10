@@ -77,7 +77,7 @@ public enum BuildingType {
 
     // Maximum residents for buildings
     public int getMaxResidents() {
-        switch(this) {
+        switch (this) {
             case APARTMENT:
                 return 60;
             case CEMENTPLANT:
@@ -103,7 +103,7 @@ public enum BuildingType {
 
     // Maximum workers for buildings
     public int getMaxWorkers() {
-        switch(this) {
+        switch (this) {
             case APARTMENT:
                 return 0;
             case CEMENTPLANT:
@@ -129,7 +129,7 @@ public enum BuildingType {
 
     // Construction time for buildings (in ingame days)
     public int getConstructionTime() {
-        switch(this) {
+        switch (this) {
             case APARTMENT:
                 return 5;
             case CEMENTPLANT:
