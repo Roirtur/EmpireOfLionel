@@ -1,0 +1,171 @@
+@startuml
+
+package eol.jfx {
+    class App {
+        +start(Stage stage)
+        +main(String[] args)
+    }
+
+    class SceneManager {
+        -Map<String, Scene> scenes
+        -Stage primaryStage
+        +loadScene(String name, String fxmlFile)
+        +showScene(String name)
+        +setPrimaryStage(Stage stage)
+        +getInstance()
+    }
+
+    class GameManager {
+        -List<Building> buildings
+        -List<Resident> residents
+        -List<Resident> unemployed_residents
+        -List<Resident> working_residents
+        -BlockingQueue<Integer> residentQueue
+        -boolean night_updated
+        -boolean time_updated
+        -Thread gameThread
+        -static boolean running
+        -static GameManager instance
+        -static Difficulty selectedDifficulty
+        -static final int REQUIRED_RESIDENTS
+        +startGame()
+        +stopGame()
+        +addBuilding(BuildingType type, int x, int y)
+        +removeBuilding(int x, int y)
+        +assignWorkerToBuilding(Building building)
+        +removeWorkerFromBuilding(Building building)
+        +updateNight()
+        +updateTime()
+        +getBuildings()
+        +getWorking_residents()
+    }
+
+    class Building {
+        -int x, y
+        -int width, height
+        -boolean exists
+        -int maxResidents
+        -int currentResidents
+        -int maxWorkers
+        -int currentWorkers
+        -Stack<Resident> residentPile
+        -HashMap<Ressource, Integer> constructionCost
+        -int constructionTime
+        -int constructionProgress
+        -boolean isBuilt
+        -WorkType workertype
+        -int upgrades
+        -final int maxUpgrades
+        -final HashMap<Ressource, Integer> upgradeCost
+        +addObserver(Observer observer)
+        +removeObserver(Observer observer)
+        +build()
+        +remove()
+        +upgradeBuilding(UpgradeType type)
+        +getWorkerType()
+        +printBuilding()
+        +update()
+        +getWidth()
+        +getHeight()
+        +getX()
+        +getY()
+        +addResident(int quantity)
+        +addWorkers(Resident resident)
+        +fireWorker()
+    }
+
+    class BuildingType {
+        +getWidth()
+        +getHeight()
+        +getCost()
+        +getMaxResidents()
+        +getMaxWorkers()
+        +getConstructionTime()
+        +getUpgradeCost()
+    }
+
+    class WorkType {
+        +getProducedRessources()
+        +getConsumedRessources()
+        +getProductionTime()
+    }
+
+    class Resident {
+        -int age
+        -int hunger
+        -boolean isAlive
+        -Building house
+        -Building workplace
+        -Work work
+        -int x, y
+        +setHouse(Building house)
+        +findAndSetHouse(List<Building> buildings)
+        +setWorkplace(Building workplace)
+        +fire()
+        +updateHunger()
+        +updateDay()
+        +updateNight()
+        +print()
+    }
+
+    class Work {
+        +work()
+        +goToWorkplace()
+        +goToSleep()
+        +generateRessources()
+    }
+
+    class PlayerInventory {
+        +useRessource(Ressource ressource, int quantity)
+        +useRessources(HashMap<Ressource, Integer> ressources)
+        +getRessourceQuantity(Ressource ressource)
+        +setRessourceQuantity(Ressource ressource, int quantity)
+        +clear()
+        +hasEnoughRessources(HashMap<Ressource, Integer> ressources)
+        +print()
+    }
+
+    class MapController {
+        +initialize()
+        +putBuildingOnMap(int row, int col)
+        +updateMapDisplay(int startX, int startY, int width, int height, Building building)
+        +showBuildingPopup(Building building, Button sourceButton, int widthInPixels)
+        +updateBuildingInfo(Building building, Label buildingInfo)
+        +updateWorkerButtons(Building building, Button addWorkerButton, Button removeWorkerButton)
+        +getCachedImage(String path)
+        +getCanvasCache()
+    }
+
+    class BuildingCreatorController {
+        +initialize()
+        +preloadImages()
+        +initializeBuildings()
+        +setSelectedBuilding(Button building)
+        +getSelectedBuilding()
+        +createTooltip(String buildingType)
+        +getConstructionCost(String buildingType)
+        +getResourceImage(String resourceName)
+        +getCachedImage(String path)
+    }
+}
+
+App --> SceneManager
+App --> GameManager
+GameManager --> Building
+GameManager --> Resident
+GameManager --> WorkType
+GameManager --> PlayerInventory
+Building --> BuildingType
+Building --> WorkType
+Building --> Resident
+Resident --> Building
+Resident --> Work
+Work --> WorkType
+PlayerInventory --> Ressource
+MapController --> Building
+MapController --> GameManager
+MapController --> PlayerInventory
+BuildingCreatorController --> BuildingType
+BuildingCreatorController --> Ressource
+
+@enduml
