@@ -40,13 +40,7 @@ public abstract class Building {
     private final int maxUpgrades = 3;
 
     // Default upgrade cost
-    private final HashMap<Ressource, Integer> upgradeCost = new HashMap<>() {
-        {
-            put(Ressource.WOOD, 10);
-            put(Ressource.STONE, 10);
-            put(Ressource.IRON, 3);
-        }
-    };
+    private final HashMap<Ressource, Integer> upgradeCost = BuildingType.getUpgradeCost();
 
     private final static List<Observer> observers = new ArrayList<>();
 

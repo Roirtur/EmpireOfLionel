@@ -1,9 +1,6 @@
 package eol.jfx.buildings;
 
-import java.util.HashMap;
-
 import eol.jfx.residents.works.WorkType;
-import eol.jfx.ressources.Ressource;
 
 public class LumberMill extends Building {
 
@@ -12,12 +9,16 @@ public class LumberMill extends Building {
     public final static BuildingType TYPE = BuildingType.LUMBERMILL;
 
     public LumberMill(int x, int y) {
-        super(x, y, BuildingType.LUMBERMILL.getWidth(), BuildingType.LUMBERMILL.getHeight(), 0, 10, 4, new HashMap<Ressource, Integer>() {
-            {
-                put(Ressource.WOOD, 50);
-                put(Ressource.STONE, 50);
-            }
-        });
+        super(
+                x,
+                y,
+                BuildingType.LUMBERMILL.getWidth(),
+                BuildingType.LUMBERMILL.getHeight(),
+                BuildingType.LUMBERMILL.getMaxResidents(),
+                BuildingType.LUMBERMILL.getMaxWorkers(),
+                BuildingType.LUMBERMILL.getConstructionTime(),
+                BuildingType.LUMBERMILL.getCost()
+        );
     }
 
     @Override

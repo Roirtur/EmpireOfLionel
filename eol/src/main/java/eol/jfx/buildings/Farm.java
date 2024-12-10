@@ -1,9 +1,6 @@
 package eol.jfx.buildings;
 
-import java.util.HashMap;
-
 import eol.jfx.residents.works.WorkType;
-import eol.jfx.ressources.Ressource;
 
 public class Farm extends Building {
 
@@ -12,12 +9,16 @@ public class Farm extends Building {
     public final static BuildingType TYPE = BuildingType.FARM;
 
     public Farm(int x, int y) {
-        super(x, y, BuildingType.FARM.getWidth(), BuildingType.FARM.getHeight(), 5, 3, 1, new HashMap<Ressource, Integer>() {
-            {
-                put(Ressource.WOOD, 5);
-                put(Ressource.STONE, 5);
-            }
-        });
+        super(
+                x,
+                y,
+                BuildingType.FARM.getWidth(),
+                BuildingType.FARM.getHeight(),
+                BuildingType.FARM.getMaxResidents(),
+                BuildingType.FARM.getMaxWorkers(),
+                BuildingType.FARM.getConstructionTime(),
+                BuildingType.FARM.getCost()
+        );
     }
 
     @Override

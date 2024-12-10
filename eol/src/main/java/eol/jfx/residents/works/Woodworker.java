@@ -1,8 +1,10 @@
 package eol.jfx.residents.works;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import eol.jfx.ressources.TimeProductionForRessource;
 
 public class Woodworker extends Work {
 
@@ -16,23 +18,29 @@ public class Woodworker extends Work {
     isWorking = true;
     System.out.println("Working on wood...");
     // TODO Go take wood from the woodencabin, and come back
-    // TODO Take away ressources from the player inventory when taking them
 
     // When the work is done, generate income
     new Thread(() -> {
       try {
-        Thread.sleep(TimeProductionForRessource.LUMBER.getTime());
+        Thread.sleep(WorkType.WOODWORKER.getProductionTime());
         generateRessources();
         System.out.println("Woodworkers finished working");
         isWorking = false;
       } catch (InterruptedException e) {
-        e.printStackTrace();
       }
     }).start();
   }
 
   @Override
   public void generateRessources() {
-    PlayerInventory.productRessource(Ressource.LUMBER, 1);
+    HashMap < Ressource, Integer > producedRessources = WorkType.WOODWORKER.getProducedRessources();
+    for (Map.Entry < Ressource, Integer > entry: producedRessources.entrySet()) {
+      PlayerInventory.productRessource(entry.getKey(), entry.getValue());
+    }
+
+    HashMap < Ressource, Integer > consumedRessources = WorkType.WOODWORKER.getConsumedRessources();
+    for (Map.Entry < Ressource, Integer > entry: consumedRessources.entrySet()) {
+      PlayerInventory.useRessource(entry.getKey(), entry.getValue());
+    }
   }
 }

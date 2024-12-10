@@ -1,56 +1,51 @@
 package eol.jfx.residents.works;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import eol.jfx.ressources.TimeProductionForRessource;
 
 public class Miner extends Work {
 
-  private Ressource currentRessource;
+    private Ressource currentRessource;
 
-  @Override
-  public String toString() {
-    return "Miner";
-  }
-
-  @Override
-  public void work() {
-    isWorking = true;
-    System.out.println("Mining resources...");
-
-    new Thread(() -> {
-      try {
-        generateRessources();
-        Ressource selectedRessource = currentRessource;
-
-        long productionTime =
-            TimeProductionForRessource.valueOf(selectedRessource.name())
-                .getTime();
-
-        Thread.sleep(productionTime);
-
-        System.out.println("Miner finished working on " +
-                           selectedRessource.name().toLowerCase());
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      } finally {
-        isWorking = false;
-      }
-    }).start();
-  }
-
-  @Override
-  public void generateRessources() {
-    double random = Math.random();
-    if (random < 0.6) {
-      currentRessource = Ressource.STONE;
-    } else if (random < 0.9) {
-      currentRessource = Ressource.COAL;
-    } else {
-      currentRessource = Ressource.IRON;
+    @Override
+    public String toString() {
+        return "Miner";
     }
 
-    PlayerInventory.productRessource(currentRessource, 1);
-    System.out.println("Generated " + currentRessource.name().toLowerCase());
-  }
+    @Override
+    public void work() {
+        isWorking = true;
+        System.out.println("Mining resources...");
+
+        new Thread(() -> {
+            try {
+                generateRessources();
+                Ressource selectedRessource = currentRessource;
+
+                Thread.sleep(WorkType.MINER.getProductionTime());
+
+                System.out.println("Miner finished working on "
+                        + selectedRessource.name().toLowerCase());
+            } catch (InterruptedException e) {
+            } finally {
+                isWorking = false;
+            }
+        }).start();
+    }
+
+    @Override
+    public void generateRessources() {
+        HashMap< Ressource, Integer> producedRessources = WorkType.MINER.getProducedRessources();
+        for (Map.Entry< Ressource, Integer> entry : producedRessources.entrySet()) {
+            PlayerInventory.productRessource(entry.getKey(), entry.getValue());
+        }
+
+        HashMap< Ressource, Integer> consumedRessources = WorkType.MINER.getConsumedRessources();
+        for (Map.Entry< Ressource, Integer> entry : consumedRessources.entrySet()) {
+            PlayerInventory.useRessource(entry.getKey(), entry.getValue());
+        }
+    }
 }

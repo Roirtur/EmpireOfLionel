@@ -1,9 +1,6 @@
 package eol.jfx.buildings;
 
-import java.util.HashMap;
-
 import eol.jfx.residents.works.WorkType;
-import eol.jfx.ressources.Ressource;
 
 public class ToolFactory extends Building {
 
@@ -12,12 +9,16 @@ public class ToolFactory extends Building {
     public final static BuildingType TYPE = BuildingType.TOOLFACTORY;
 
     public ToolFactory(int x, int y) {
-        super(x, y, BuildingType.TOOLFACTORY.getWidth(), BuildingType.TOOLFACTORY.getHeight(), 0, 12, 8, new HashMap<Ressource, Integer>() {
-            {
-                put(Ressource.WOOD, 50);
-                put(Ressource.STONE, 50);
-            }
-        });
+        super(
+                x,
+                y,
+                BuildingType.TOOLFACTORY.getWidth(),
+                BuildingType.TOOLFACTORY.getHeight(),
+                BuildingType.TOOLFACTORY.getMaxResidents(),
+                BuildingType.TOOLFACTORY.getMaxWorkers(),
+                BuildingType.TOOLFACTORY.getConstructionTime(),
+                BuildingType.TOOLFACTORY.getCost()
+        );
     }
 
     @Override

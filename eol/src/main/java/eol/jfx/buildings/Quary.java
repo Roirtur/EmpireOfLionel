@@ -1,9 +1,6 @@
 package eol.jfx.buildings;
 
-import java.util.HashMap;
-
 import eol.jfx.residents.works.WorkType;
-import eol.jfx.ressources.Ressource;
 
 public class Quary extends Building {
 
@@ -12,11 +9,16 @@ public class Quary extends Building {
     public final static BuildingType TYPE = BuildingType.QUARY;
 
     public Quary(int x, int y) {
-        super(x, y, BuildingType.QUARY.getWidth(), BuildingType.QUARY.getHeight(), 2, 30, 2, new HashMap<Ressource, Integer>() {
-            {
-                put(Ressource.WOOD, 50);
-            }
-        });
+        super(
+                x,
+                y,
+                BuildingType.QUARY.getWidth(),
+                BuildingType.QUARY.getHeight(),
+                BuildingType.QUARY.getMaxResidents(),
+                BuildingType.QUARY.getMaxWorkers(),
+                BuildingType.QUARY.getConstructionTime(),
+                BuildingType.QUARY.getCost()
+        );
     }
 
     @Override

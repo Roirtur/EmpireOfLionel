@@ -31,6 +31,8 @@ public class Resident {
 
         PlayerInventory.productRessource(Ressource.RESIDENTS);
 
+        PlayerInventory.useRessource(Ressource.FOOD, ResidentSettings.RESIDENT.getProductionCost());
+
         this.age = 0;
         this.hunger = 100;
         this.isAlive = true;
@@ -86,13 +88,14 @@ public class Resident {
     }
 
     private void eat() {
-        if (PlayerInventory.getRessourceQuantity(Ressource.FOOD) <= 0) {
+        int eat_cost = ResidentSettings.RESIDENT.getEatCost();
+        if (PlayerInventory.getRessourceQuantity(Ressource.FOOD) - eat_cost <= 0) {
+            // Cannot eat
             return;
         }
 
-        // System.out.println("Resident is eating");
-        PlayerInventory.useRessource(Ressource.FOOD);
-        hunger += 50;
+        PlayerInventory.useRessource(Ressource.FOOD, eat_cost);
+        hunger += ResidentSettings.RESIDENT.getEatValue();
         if (hunger > 100) {
             hunger = 100;
         }
@@ -103,9 +106,9 @@ public class Resident {
     }
 
     public void updateHunger() {
-        hunger -= 5;
+        hunger -= ResidentSettings.RESIDENT.getHungerSpeed();
 
-        if (hunger <= 40) {
+        if (hunger <= ResidentSettings.RESIDENT.eatTrigger()) {
             eat();
         }
         if (hunger <= 0) {
@@ -114,8 +117,6 @@ public class Resident {
     }
 
     public void updateDay() {
-        // TODO: Update age and hunger once in a while
-        // TODO: Go to house when it is night
         if (workplace != null && work != null && !work.isWorking) {
             work.work();
         }
