@@ -35,7 +35,7 @@ public class BuildingCreatorController {
     if (buildingBox == null) {
       System.err.println("buildingBox is null. Check fx:id in building.fxml.");
     } else {
-      System.out.println("buildingBox is properly injected.");
+      // System.out.println("buildingBox is properly injected.");
       preloadImages();
       initializeBuildings();
     }
@@ -121,7 +121,7 @@ public class BuildingCreatorController {
       building.getStyleClass().add("building-selected");
       selectedButton = building;
     }
-    System.out.println("Selected building: " + buildingName);
+    // System.out.println("Selected building: " + buildingName);
   }
 
   public static String getSelectedBuilding() { return buildingName; }

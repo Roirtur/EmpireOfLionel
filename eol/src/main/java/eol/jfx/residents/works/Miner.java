@@ -16,7 +16,7 @@ public class Miner extends Work {
     @Override
     public void work() {
         isWorking = true;
-        System.out.println("Mining resources...");
+        // System.out.println("Mining resources...");
 
         new Thread(() -> {
             try {

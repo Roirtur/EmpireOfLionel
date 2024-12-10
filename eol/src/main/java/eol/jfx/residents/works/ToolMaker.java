@@ -16,7 +16,7 @@ public class ToolMaker extends Work {
     @Override
     public void work() {
         isWorking = true;
-        System.out.println("Working on tools...");
+        // System.out.println("Working on tools...");
         // TODO Go take steel from the SteelMill, and coal from the CoalMine, and
         // come back
 
@@ -25,7 +25,7 @@ public class ToolMaker extends Work {
             try {
                 Thread.sleep(WorkType.TOOLMAKER.getProductionTime());
                 generateRessources();
-                System.out.println("ToolMaker finished working");
+                // System.out.println("ToolMaker finished working");
                 isWorking = false;
             } catch (InterruptedException e) {
             }

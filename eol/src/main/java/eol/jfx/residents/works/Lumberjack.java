@@ -16,7 +16,7 @@ public class Lumberjack extends Work {
     @Override
     public void work() {
         isWorking = true;
-        System.out.println("Working on wood...");
+        // System.out.println("Working on wood...");
         // TODO Go take wood from the woodencabin, and come back
 
         // When the work is done, generate income
@@ -24,7 +24,7 @@ public class Lumberjack extends Work {
             try {
                 Thread.sleep(WorkType.LUMBERJACK.getProductionTime());
                 generateRessources();
-                System.out.println("Woodworkers finished working");
+                // System.out.println("Woodworkers finished working");
                 isWorking = false;
             } catch (InterruptedException e) {
             }

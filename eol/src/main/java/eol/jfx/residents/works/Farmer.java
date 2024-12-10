@@ -23,7 +23,7 @@ public class Farmer extends Work {
             try {
                 Thread.sleep(WorkType.FARMER.getProductionTime());
                 generateRessources();
-                System.out.println("Farmer has finished working");
+                // System.out.println("Farmer has finished working");
                 isWorking = false;
             } catch (InterruptedException e) {
                 System.err.println("Thread was interrupted!");

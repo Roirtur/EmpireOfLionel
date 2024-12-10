@@ -43,7 +43,7 @@ public class MapController implements Observer {
         if (mapGrid == null) {
             System.err.println("mapGrid is null. Check fx:id in map.fxml.");
         } else {
-            System.out.println("mapGrid is properly injected.");
+            // System.out.println("mapGrid is properly injected.");
             preloadImages();
             initializeGrid();
             Building.addObserver(this);
@@ -64,11 +64,11 @@ public class MapController implements Observer {
     public void putBuildingOnMap(int row, int col) {
         String buildingType = BuildingCreatorController.getSelectedBuilding();
         if (buildingType == null || buildingType.equals("")) {
-            System.out.println("No building selected.");
+            // System.out.println("No building selected.");
             return;
         }
 
-        System.out.println(buildingType.toUpperCase());
+        // System.out.println(buildingType.toUpperCase());
         BuildingType type = BuildingType.valueOf(buildingType.toUpperCase());
         Building building = BuildingFactory.createBuilding(type, col, row);
 
@@ -81,7 +81,7 @@ public class MapController implements Observer {
                 GridMap.removeBuilding(building);
             }
         } else {
-            System.out.println("Can't place building at " + row + ", " + col);
+            // System.out.println("Can't place building at " + row + ", " + col);
         }
     }
 
@@ -131,7 +131,7 @@ public class MapController implements Observer {
         // if building is null, remove the building from the map
         // but keep the ground tile and make it clickable to later place a new building
         if (building == null) {
-            System.out.println("Removing building at " + startY + ", " + startX);
+            // System.out.println("Removing building at " + startY + ", " + startX);
             for (int row = startY; row < startY + height; row++) {
                 for (int col = startX; col < startX + width; col++) {
                     final int currentRow = row;
@@ -224,7 +224,7 @@ public class MapController implements Observer {
         addWorkerButton.setOnAction(e -> {
             try {
                 GameManager.assignWorkerToBuilding(building);
-                System.out.println("Worker added to building: " + building.getClass().getSimpleName());
+                // System.out.println("Worker added to building: " + building.getClass().getSimpleName());
                 updateBuildingInfo(building, buildingInfo);
                 updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
             } catch (IllegalStateException ex) {
@@ -235,7 +235,7 @@ public class MapController implements Observer {
         removeWorkerButton.setOnAction(e -> {
             try {
                 GameManager.removeWorkerFromBuilding(building);
-                System.out.println("Worker removed from building: " + building.getClass().getSimpleName());
+                // System.out.println("Worker removed from building: " + building.getClass().getSimpleName());
                 updateBuildingInfo(building, buildingInfo);
                 updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
             } catch (IllegalStateException ex) {
@@ -248,7 +248,7 @@ public class MapController implements Observer {
             try {
                 GameManager.removeBuilding(building.getX(), building.getY());
                 updateMapDisplay(building.getX(), building.getY(), building.getWidth(), building.getHeight(), null);
-                System.out.println("Building destroyed: " + building.getClass().getSimpleName());
+                // System.out.println("Building destroyed: " + building.getClass().getSimpleName());
             } catch (IllegalStateException ex) {
                 System.err.println("Error destroying building: " + ex.getMessage());
             }

@@ -16,7 +16,7 @@ public class CementProductor extends Work {
     @Override
     public void work() {
         isWorking = true;
-        System.out.println("Working on cement...");
+        // System.out.println("Working on cement...");
         // TODO Go take stone and coal from the quarry, and come back
 
         // When the work is done, generate income
@@ -24,7 +24,7 @@ public class CementProductor extends Work {
             try {
                 Thread.sleep(WorkType.CEMENTPRODUCTOR.getProductionTime());
                 generateRessources();
-                System.out.println("Cement workers finished working");
+                // System.out.println("Cement workers finished working");
                 isWorking = false;
             } catch (InterruptedException e) {
             }

@@ -73,7 +73,7 @@ public abstract class Building {
         this.constructionTime = constructionTime * 24;
         this.constructionCost = constructionCost;
 
-        System.out.println("Building created");
+        // System.out.println("Building created");
         // build();
     }
 
@@ -97,7 +97,7 @@ public abstract class Building {
 
         useRessources(constructionCost);
         // Log the construction cost
-        System.out.println("Construction cost: " + constructionCost);
+        // System.out.println("Construction cost: " + constructionCost);
     }
 
     public void remove() {
@@ -176,11 +176,11 @@ public abstract class Building {
         residentPile.push(resident);
 
         // Print out the resident pile
-        System.out.println("Resident pile: " + residentPile.size());
-        System.out.println("Current workers: " + currentWorkers);
-        for (Resident r : residentPile) {
-            System.out.println(r);
-        }
+        // System.out.println("Resident pile: " + residentPile.size());
+        // System.out.println("Current workers: " + currentWorkers);
+        // for (Resident r : residentPile) {
+        //     System.out.println(r);
+        // }
 
         return 0;
     }
@@ -276,7 +276,7 @@ public abstract class Building {
             if (constructionProgress >= constructionTime) {
                 isBuilt = true;
                 PlayerInventory.productRessource(Ressource.MAXRESIDENTS, maxResidents);
-                System.out.println("Building is built");
+                // System.out.println("Building is built");
                 notifyObservers();
             } else {
                 constructionProgress++;

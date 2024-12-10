@@ -31,7 +31,7 @@ public class ResourceController implements Observer {
         if (resourceBox == null) {
             System.err.println("resourceBox is null. Check fx:id in resources.fxml.");
         } else {
-            System.out.println("resourceBox is properly injected.");
+            // System.out.println("resourceBox is properly injected.");
             preloadImages();
             resourceBox.setHgap(20);
             resourceBox.setVgap(20);

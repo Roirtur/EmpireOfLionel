@@ -74,8 +74,8 @@ public class Resident {
 
         this.workplace = workplace;
         this.work = WorkFactory.createWork(workplace.getWorkerType());
-        System.out.println("New work: " + work.toString());
-        print();
+        // System.out.println("New work: " + work.toString());
+        // print();
     }
 
     public void fire() {

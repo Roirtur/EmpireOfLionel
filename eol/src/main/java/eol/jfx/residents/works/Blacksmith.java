@@ -16,7 +16,7 @@ public class Blacksmith extends Work {
     @Override
     public void work() {
         isWorking = true;
-        System.out.println("Working on steel...");
+        // System.out.println("Working on steel...");
         // TODO Go take iron and coal from the quarry, and come back
 
         // When the work is done, generate income
@@ -24,7 +24,7 @@ public class Blacksmith extends Work {
             try {
                 Thread.sleep(WorkType.BLACKSMITH.getProductionTime());
                 generateRessources();
-                System.out.println("Blacksmith finished working");
+                // System.out.println("Blacksmith finished working");
                 isWorking = false;
             } catch (InterruptedException e) {
             }

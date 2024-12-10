@@ -63,7 +63,7 @@ public class GameManager {
     }
 
     public static void startGame() {
-        System.out.println("Game started with difficulty: " + selectedDifficulty);
+        // System.out.println("Game started with difficulty: " + selectedDifficulty);
         GameTime.getInstance().startTimer();
 
         getInstance().gameThread.start();
@@ -92,7 +92,7 @@ public class GameManager {
                 processResidentQueue(); // Traiter la file d'attente des résidents
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.out.println("Game loop interrupted");
+                // System.out.println("Game loop interrupted");
             }
         }
     }
@@ -236,9 +236,9 @@ public class GameManager {
         working_residents.remove(worker);
 
         worker.fire();
-        System.out.println("Worker fired");
-        worker.print();
-        building.printBuilding();
+        // System.out.println("Worker fired");
+        // worker.print();
+        // building.printBuilding();
     }
 
     public static void updateNight() {
@@ -260,9 +260,9 @@ public class GameManager {
         if (night_updated) {
             night_updated = false;
             if (GameTime.isNight()) {
-                System.out.println("Night time");
+                // System.out.println("Night time");
             } else {
-                System.out.println("Day time");
+                // System.out.println("Day time");
             }
         }
     }
@@ -308,7 +308,7 @@ public class GameManager {
     }
 
     private void onVictory() {
-        System.out.println("You won the game!");
+        // System.out.println("You won the game!");
         stopGame();
         Platform.runLater(() -> {
             SceneManager sceneManager = SceneManager.getInstance();
@@ -323,7 +323,7 @@ public class GameManager {
     }
 
     private void onDefeat() {
-        System.out.println("You lost the game!");
+        // System.out.println("You lost the game!");
         stopGame();
         Platform.runLater(() -> {
             SceneManager sceneManager = SceneManager.getInstance();
