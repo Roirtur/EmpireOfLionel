@@ -1,6 +1,7 @@
 package eol.jfx.viewcontrollers;
 
 import eol.jfx.buildings.BuildingType;
+import eol.jfx.ressources.Ressource;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
@@ -128,15 +129,17 @@ public class BuildingCreatorController {
     VBox vbox = new VBox();
     vbox.setSpacing(10);
 
-    Map<String, Integer> constructionCost = getConstructionCost(buildingType);
+    Map<Ressource, Integer> constructionCost =
+        getConstructionCost(buildingType);
 
-    for (Map.Entry<String, Integer> entry : constructionCost.entrySet()) {
+    for (Map.Entry<Ressource, Integer> entry : constructionCost.entrySet()) {
       HBox hbox = new HBox();
       hbox.setSpacing(10);
 
       double imageSize = 40;
 
-      ImageView imageView = new ImageView(getResourceImage(entry.getKey()));
+      ImageView imageView =
+          new ImageView(getResourceImage(entry.getKey().name()));
       imageView.setFitWidth(imageSize);
       imageView.setFitHeight(imageSize);
 
@@ -158,10 +161,10 @@ public class BuildingCreatorController {
     return tooltip;
   }
 
-  private HashMap<String, Integer> getConstructionCost(String buildingType) {
+  private HashMap<Ressource, Integer> getConstructionCost(String buildingType) {
     try {
       BuildingType type = BuildingType.valueOf(buildingType.toUpperCase());
-      return type.getConstructionCost();
+      return type.getCost();
     } catch (IllegalArgumentException e) {
       System.err.println("Building type not found: " + buildingType);
       return new HashMap<>();
