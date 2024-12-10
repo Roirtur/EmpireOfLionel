@@ -55,7 +55,6 @@ public class MainController {
 
       // Lier le label au timeProperty de GameTime
       timeLabel.textProperty().bind(GameTime.getInstance().timeProperty());
-      GameTime.getInstance().startTimer();
 
     } catch (IOException e) {
     }
