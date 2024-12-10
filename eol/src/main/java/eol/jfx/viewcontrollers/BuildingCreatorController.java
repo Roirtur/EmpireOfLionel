@@ -1,11 +1,13 @@
 package eol.jfx.viewcontrollers;
 
-import eol.jfx.buildings.BuildingType;
-import eol.jfx.ressources.Ressource;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import eol.jfx.buildings.BuildingType;
+import eol.jfx.ressources.Ressource;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -101,7 +103,7 @@ public class BuildingCreatorController {
       } else {
         System.err.println("No image files found in the building folder.");
       }
-    } catch (Exception e) {
+    } catch (URISyntaxException e) {
     }
   }
 

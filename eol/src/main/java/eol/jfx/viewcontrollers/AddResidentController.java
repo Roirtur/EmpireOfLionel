@@ -23,6 +23,7 @@ public class AddResidentController {
     }
 
     @FXML
+    @SuppressWarnings("unused") // Used in FXML
     private void handleAddResident() {
         int residentCount; // Default value
         try {

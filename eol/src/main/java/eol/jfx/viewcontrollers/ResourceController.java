@@ -96,7 +96,6 @@ public class ResourceController implements Observer {
                 System.err.println("No image files found in the resource folder.");
             }
         } catch (URISyntaxException e) {
-            e.printStackTrace();
         }
     }
 

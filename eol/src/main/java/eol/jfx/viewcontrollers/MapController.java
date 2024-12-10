@@ -291,4 +291,8 @@ public class MapController implements Observer {
         }
         return imageCache.get(path);
     }
+
+    public Map<String, Canvas> getCanvasCache() {
+        return canvasCache;
+    }
 }

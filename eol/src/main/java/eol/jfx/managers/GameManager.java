@@ -1,5 +1,11 @@
 package eol.jfx.managers;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 import eol.jfx.buildings.Building;
 import eol.jfx.buildings.BuildingFactory;
 import eol.jfx.buildings.BuildingType;
@@ -9,11 +15,6 @@ import eol.jfx.residents.Resident;
 import eol.jfx.ressources.InventoryInitiator;
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import javafx.application.Platform;
 
 public class GameManager {
@@ -317,4 +318,8 @@ public class GameManager {
       sceneManager.showScene("defeat");
     });
   }
+
+    public List<Resident> getWorking_residents() {
+        return working_residents;
+    }
 }
