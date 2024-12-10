@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox alignment="CENTER" spacing="20" xmlns:fx="http://javafx.com/fxml" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="eol.jfx.viewcontrollers.VictoryController" stylesheets="@css/victory.css">
+    <Label text="La descendance de Lionel est assurée. Vous avez gagné la partie !" styleClass="victory-label"/>
+    <Button fx:id="okButton" text="OK" onAction="#handleOkButton"/>
+</VBox>

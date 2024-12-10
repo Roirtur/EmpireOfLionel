@@ -1,0 +1,22 @@
+.victory-label {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, black, 5, 0.5, 0, 0);
+}
+
+.vbox {
+    -fx-background-color: black;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+.button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-effect: dropshadow(gaussian, black, 5, 0.5, 0, 0);
+}
