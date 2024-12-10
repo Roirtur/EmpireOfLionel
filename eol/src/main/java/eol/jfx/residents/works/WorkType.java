@@ -75,7 +75,7 @@ public enum WorkType {
             case MINER:
                 break;
             case TOOLMAKER:
-                consumedRessources.put(Ressource.STEEL, 1);
+                consumedRessources.put(Ressource.IRON, 1);
                 consumedRessources.put(Ressource.COAL, 1);
                 break;
             case UNEMPLOYED:

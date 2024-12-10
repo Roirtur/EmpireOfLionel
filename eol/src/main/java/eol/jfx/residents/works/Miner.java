@@ -8,8 +8,6 @@ import eol.jfx.ressources.Ressource;
 
 public class Miner extends Work {
 
-    private Ressource currentRessource;
-
     @Override
     public String toString() {
         return "Miner";
@@ -23,12 +21,8 @@ public class Miner extends Work {
         new Thread(() -> {
             try {
                 generateRessources();
-                Ressource selectedRessource = currentRessource;
 
                 Thread.sleep(WorkType.MINER.getProductionTime());
-
-                System.out.println("Miner finished working on "
-                        + selectedRessource.name().toLowerCase());
             } catch (InterruptedException e) {
             } finally {
                 isWorking = false;

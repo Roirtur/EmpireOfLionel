@@ -9,9 +9,12 @@ import eol.jfx.buildings.BuildingType;
 import eol.jfx.managers.GameManager;
 import eol.jfx.managers.GridMap;
 import eol.jfx.observers.Observer;
+import eol.jfx.residents.works.WorkType;
+import eol.jfx.ressources.Ressource;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -19,8 +22,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 
@@ -210,6 +215,9 @@ public class MapController implements Observer {
         Label buildingInfo = new Label();
         updateBuildingInfo(building, buildingInfo);
 
+        HBox resourceInfoLabel = new HBox();
+        updateResourceInfo(building, resourceInfoLabel);
+
         Button addWorkerButton = new Button("Add Worker");
         Button removeWorkerButton = new Button("Remove Worker");
 
@@ -252,7 +260,7 @@ public class MapController implements Observer {
 
         updateWorkerButtons(building, addWorkerButton, removeWorkerButton);
 
-        popupContent.getChildren().addAll(buildingInfo, addWorkerButton, removeWorkerButton, destroyButton, closeButton);
+        popupContent.getChildren().addAll(buildingInfo, addWorkerButton, removeWorkerButton, resourceInfoLabel, destroyButton, closeButton);
         popup.getContent().add(popupContent);
 
         // Calculate the position to show the popup next to the clicked button
@@ -280,8 +288,78 @@ public class MapController implements Observer {
     }
 
     private void updateWorkerButtons(Building building, Button addWorkerButton, Button removeWorkerButton) {
-        addWorkerButton.setVisible(building.getCurrentWorkers() < building.getMaxWorkers());
-        removeWorkerButton.setVisible(building.getCurrentWorkers() > 0);
+        if (building.getCurrentWorkers() < building.getMaxWorkers()) {
+            addWorkerButton.setDisable(false);
+        } else {
+            addWorkerButton.setDisable(true);
+        }
+
+        if (building.getCurrentWorkers() > 0) {
+            removeWorkerButton.setDisable(false);
+        } else {
+            removeWorkerButton.setDisable(true);
+        }
+    }
+
+    private void updateResourceInfo(Building building, HBox resourceInfoBox) {
+        WorkType workType = building.getWorkerType();
+        resourceInfoBox.getChildren().clear();
+
+        if (workType != null) {
+            HashMap<Ressource, Integer> consumedResources = workType.getConsumedRessources();
+            HashMap<Ressource, Integer> producedResources = workType.getProducedRessources();
+
+            // Will be displayed as:
+            // Resources: _amount _resource_image + _amount _resource_image + ... = _amount _resource_image
+            // If no resources are consumed, just show "free = _amount _resource_image"
+            if (!consumedResources.isEmpty()) {
+                for (Map.Entry<Ressource, Integer> entry : consumedResources.entrySet()) {
+                    resourceInfoBox.getChildren().add(createResourceLabel(entry.getKey(), entry.getValue()));
+                    Label plusLabel = new Label(" + ");
+                    plusLabel.setStyle("-fx-font-size: 32px;"); // Increase font size
+                    resourceInfoBox.getChildren().add(plusLabel);
+                }
+                resourceInfoBox.getChildren().remove(resourceInfoBox.getChildren().size() - 1); // Remove the last " + "
+                Label equalsLabel = new Label(" = ");
+                equalsLabel.setStyle("-fx-font-size: 32px;"); // Increase font size
+                resourceInfoBox.getChildren().add(equalsLabel);
+            } else {
+                Label freeLabel = new Label("free = ");
+                freeLabel.setStyle("-fx-font-size: 32px;"); // Increase font size
+                resourceInfoBox.getChildren().add(freeLabel);
+            }
+
+            for (Map.Entry<Ressource, Integer> entry : producedResources.entrySet()) {
+                resourceInfoBox.getChildren().add(createResourceLabel(entry.getKey(), entry.getValue()));
+                Label plusLabel = new Label(" + ");
+                plusLabel.setStyle("-fx-font-size: 32px;"); // Increase font size
+                resourceInfoBox.getChildren().add(plusLabel);
+            }
+            resourceInfoBox.getChildren().remove(resourceInfoBox.getChildren().size() - 1); // Remove the last " + "
+        } else {
+            resourceInfoBox.getChildren().add(new Label("No worker type assigned."));
+        }
+    }
+
+    private HBox createResourceLabel(Ressource ressource, int amount) {
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER); // Align vertically
+        Label amountLabel = new Label(String.valueOf(amount));
+        amountLabel.setStyle("-fx-font-size: 32px;"); // Increase font size
+        ImageView imageView = new ImageView(getResourceImage(ressource.toString().toLowerCase()));
+        imageView.setFitWidth(32); // Increase width
+        imageView.setFitHeight(32); // Increase height
+        hbox.getChildren().addAll(amountLabel, imageView);
+        return hbox;
+    }
+
+    private Image getResourceImage(String resourceName) {
+        if (!imageCache.containsKey(resourceName)) {
+            String imagePath = "/eol/img_no_bg/resources/" + resourceName + ".png";
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imageCache.put(resourceName, image);
+        }
+        return imageCache.get(resourceName);
     }
 
     private Image getCachedImage(String path) {
