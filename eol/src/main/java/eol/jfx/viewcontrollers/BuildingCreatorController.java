@@ -101,7 +101,6 @@ public class BuildingCreatorController {
         System.err.println("No image files found in the building folder.");
       }
     } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 
@@ -159,10 +158,10 @@ public class BuildingCreatorController {
     return tooltip;
   }
 
-  private Map<String, Integer> getConstructionCost(String buildingType) {
+  private HashMap<String, Integer> getConstructionCost(String buildingType) {
     try {
       BuildingType type = BuildingType.valueOf(buildingType.toUpperCase());
-      return type.getConstructionMap();
+      return type.getConstructionCost();
     } catch (IllegalArgumentException e) {
       System.err.println("Building type not found: " + buildingType);
       return new HashMap<>();
