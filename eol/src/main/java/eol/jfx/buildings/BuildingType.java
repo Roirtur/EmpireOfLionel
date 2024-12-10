@@ -36,40 +36,39 @@ public enum BuildingType {
         HashMap<Ressource, Integer> cost = new HashMap<>();
         switch (this) {
             case APARTMENT:
-                cost.put(Ressource.WOOD, 1000);
-                cost.put(Ressource.STONE, 1000);
+                cost.put(Ressource.STEEL, 50);
+                cost.put(Ressource.STONE, 150);
+                cost.put(Ressource.CEMENT, 20);
                 break;
             case CEMENTPLANT:
-                cost.put(Ressource.WOOD, 50);
+                cost.put(Ressource.STEEL, 20);
                 cost.put(Ressource.STONE, 50);
                 break;
             case FARM:
-                cost.put(Ressource.WOOD, 50);
-                cost.put(Ressource.STONE, 50);
+                cost.put(Ressource.WOOD, 30);
+                cost.put(Ressource.STONE, 30);
                 break;
             case HOUSE:
                 cost.put(Ressource.WOOD, 50);
                 cost.put(Ressource.STONE, 50);
                 break;
             case LUMBERMILL:
-                cost.put(Ressource.WOOD, 50);
+                cost.put(Ressource.WOOD, 100);
                 cost.put(Ressource.STONE, 50);
                 break;
             case QUARY:
-                cost.put(Ressource.WOOD, 50);
-                cost.put(Ressource.STONE, 50);
+                cost.put(Ressource.WOOD, 150);
                 break;
             case STEELMILL:
-                cost.put(Ressource.WOOD, 50);
-                cost.put(Ressource.STONE, 50);
+                cost.put(Ressource.IRON, 50);
+                cost.put(Ressource.STONE, 150);
                 break;
             case TOOLFACTORY:
                 cost.put(Ressource.WOOD, 50);
                 cost.put(Ressource.STONE, 50);
                 break;
             case WOODENCABIN:
-                cost.put(Ressource.WOOD, 50);
-                cost.put(Ressource.STONE, 50);
+                cost.put(Ressource.WOOD, 20);
                 break;
         }
         return cost;
@@ -79,11 +78,11 @@ public enum BuildingType {
     public int getMaxResidents() {
         switch (this) {
             case APARTMENT:
-                return 60;
+                return 100;
             case CEMENTPLANT:
                 return 0;
             case FARM:
-                return 4;
+                return 0;
             case HOUSE:
                 return 10;
             case LUMBERMILL:
@@ -95,7 +94,7 @@ public enum BuildingType {
             case TOOLFACTORY:
                 return 0;
             case WOODENCABIN:
-                return 2;
+                return 0;
             default:
                 return 0;
         }
@@ -107,21 +106,21 @@ public enum BuildingType {
             case APARTMENT:
                 return 0;
             case CEMENTPLANT:
-                return 10;
+                return 20;
             case FARM:
-                return 4;
+                return 5;
             case HOUSE:
                 return 0;
             case LUMBERMILL:
-                return 10;
+                return 15;
             case QUARY:
-                return 10;
+                return 30;
             case STEELMILL:
-                return 10;
+                return 20;
             case TOOLFACTORY:
-                return 4;
+                return 10;
             case WOODENCABIN:
-                return 0;
+                return 5;
             default:
                 return 0;
         }

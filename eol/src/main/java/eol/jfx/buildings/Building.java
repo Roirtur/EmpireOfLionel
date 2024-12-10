@@ -92,10 +92,12 @@ public abstract class Building {
         // Check if the building is buildable
         if (!isBuildable()) {
             // Throw an exception
-            throw new IllegalArgumentException("The building is not buildable");
+            throw new IllegalArgumentException("The building is not buildable (not enough ressources)");
         }
 
         useRessources(constructionCost);
+        // Log the construction cost
+        System.out.println("Construction cost: " + constructionCost);
     }
 
     public void remove() {
@@ -257,7 +259,7 @@ public abstract class Building {
         }
 
         // Check if the player has enough ressources
-        if (!PlayerInventory.hasEnoughRessources(upgradeCost)) {
+        if (!PlayerInventory.hasEnoughRessources(ressources)) {
             // Throw an exception
             throw new IllegalArgumentException(
                     "The player does not have enough ressources");

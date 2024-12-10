@@ -32,9 +32,10 @@ public enum WorkType {
             case MINER:
                 double random = Math.random();
                 Ressource currentRessource;
-                if (random < 0.6) {
+                // 40% chance for stone, 35% for coal, 25% for iron
+                if (random < 0.4) {
                     currentRessource = Ressource.STONE;
-                } else if (random < 0.9) {
+                } else if (random < 0.75) {
                     currentRessource = Ressource.COAL;
                 } else {
                     currentRessource = Ressource.IRON;
@@ -59,7 +60,6 @@ public enum WorkType {
     public HashMap<Ressource, Integer> getConsumedRessources() {
         HashMap<Ressource, Integer> consumedRessources = new HashMap<>();
 
-        // TODO
         switch (this) {
             case BLACKSMITH:
                 consumedRessources.put(Ressource.IRON, 1);

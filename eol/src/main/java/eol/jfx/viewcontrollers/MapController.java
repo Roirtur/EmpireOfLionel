@@ -68,8 +68,13 @@ public class MapController implements Observer {
         Building building = BuildingFactory.createBuilding(type, col, row);
 
         if (GridMap.placeBuilding(building, col, row)) {
-            GameManager.getInstance().addBuilding(building);
-            updateMapDisplay(col, row, building.getWidth(), building.getHeight(), building);
+            try {
+                GameManager.getInstance().addBuilding(building);
+                updateMapDisplay(col, row, building.getWidth(), building.getHeight(), building);
+            } catch (IllegalStateException e) {
+                System.err.println("Error adding building: " + e.getMessage());
+                GridMap.removeBuilding(building);
+            }
         } else {
             System.out.println("Can't place building at " + row + ", " + col);
         }
@@ -134,7 +139,7 @@ public class MapController implements Observer {
 
                     // Define the desired output width and height
                     double outputWidth = 50;
-                    double outputHeight = 50; 
+                    double outputHeight = 50;
 
                     Canvas canvas = new Canvas(outputWidth, outputHeight);
                     GraphicsContext gc = canvas.getGraphicsContext2D();
