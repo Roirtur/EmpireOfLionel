@@ -1,17 +1,14 @@
 package eol.jfx.managers;
 
+import eol.jfx.observers.TimeObserver;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-/**
- * The GameTime class is a singleton that manages the in-game time. It uses a
- * Timer to increment the time every second. The time is represented in seconds
- * and can be formatted to display days and hours. The class also keeps track of
- * day and night cycles.
- */
 public class GameTime {
 
   private static volatile GameTime instance;
@@ -26,14 +23,13 @@ public class GameTime {
   private long hours;
 
   private final StringProperty timeProperty = new SimpleStringProperty();
+  private final List<TimeObserver> observers = new ArrayList<>();
 
-  // Private constructor to prevent instantiation
   private GameTime() {
     timer = new Timer();
     seconds = 0;
   }
 
-  // Public method to provide access to the single instance
   public static GameTime getInstance() {
     GameTime localInstance = instance;
     if (localInstance == null) {
@@ -63,6 +59,7 @@ public class GameTime {
     GameManager.getInstance().updateTime();
     checkNight();
     updateTimeProperty();
+    notifyObservers();
   }
 
   private void updateTimeProperty() {
@@ -99,4 +96,18 @@ public class GameTime {
   }
 
   public static boolean isNight() { return getInstance().night; }
+
+  public void addObserver(TimeObserver observer) { observers.add(observer); }
+
+  public void removeObserver(TimeObserver observer) {
+    observers.remove(observer);
+  }
+
+  private void notifyObservers() {
+    for (TimeObserver observer : observers) {
+      observer.update((int)hours);
+    }
+  }
+
+  public long getCurrentHour() { return hours; }
 }

@@ -1,45 +1,33 @@
 package eol.jfx.residents.works;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import eol.jfx.ressources.PlayerInventory;
 import eol.jfx.ressources.Ressource;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Woodworker extends Work {
 
   @Override
   public String toString() {
-    return "Woodworkers";
+    return "Woodworker";
   }
 
   @Override
-  public void work() {
-    isWorking = true;
-    // System.out.println("Working on wood...");
-    // TODO Go take wood from the woodencabin, and come back
-
-    // When the work is done, generate income
-    new Thread(() -> {
-      try {
-        Thread.sleep(WorkType.WOODWORKER.getProductionTime());
-        generateRessources();
-        // System.out.println("Woodworkers finished working");
-        isWorking = false;
-      } catch (InterruptedException e) {
-      }
-    }).start();
+  public WorkType getWorkType() {
+    return WorkType.WOODWORKER;
   }
 
   @Override
   public void generateRessources() {
-    HashMap < Ressource, Integer > producedRessources = WorkType.WOODWORKER.getProducedRessources();
-    for (Map.Entry < Ressource, Integer > entry: producedRessources.entrySet()) {
+    HashMap<Ressource, Integer> producedRessources =
+        WorkType.WOODWORKER.getProducedRessources();
+    for (Map.Entry<Ressource, Integer> entry : producedRessources.entrySet()) {
       PlayerInventory.productRessource(entry.getKey(), entry.getValue());
     }
 
-    HashMap < Ressource, Integer > consumedRessources = WorkType.WOODWORKER.getConsumedRessources();
-    for (Map.Entry < Ressource, Integer > entry: consumedRessources.entrySet()) {
+    HashMap<Ressource, Integer> consumedRessources =
+        WorkType.WOODWORKER.getConsumedRessources();
+    for (Map.Entry<Ressource, Integer> entry : consumedRessources.entrySet()) {
       PlayerInventory.useRessource(entry.getKey(), entry.getValue());
     }
   }
