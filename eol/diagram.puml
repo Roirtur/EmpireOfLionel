@@ -147,6 +147,20 @@ package eol.jfx {
         +getResourceImage(String resourceName)
         +getCachedImage(String path)
     }
+
+    class Ressource {
+        +FOOD
+        +WOOD
+        +STONE
+        +COAL
+        +IRON
+        +STEEL
+        +CEMENT
+        +LUMBER
+        +TOOLS
+        +RESIDENTS
+        +MAXRESIDENTS
+    }
 }
 
 App --> SceneManager
@@ -167,5 +181,7 @@ MapController --> GameManager
 MapController --> PlayerInventory
 BuildingCreatorController --> BuildingType
 BuildingCreatorController --> Ressource
+
+left to right direction
 
 @enduml
