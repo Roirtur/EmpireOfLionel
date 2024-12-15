@@ -6,7 +6,9 @@ import java.util.Map;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class SceneManager {
 
@@ -28,8 +30,9 @@ public class SceneManager {
   public void loadScene(String name, String fxmlFile) throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
     Parent root = loader.load();
-    Scene scene =
-        new Scene(root, 720, 480); // Set initial window size to 720x480
+    Screen screen = Screen.getPrimary();
+    javafx.geometry.Rectangle2D bounds = screen.getVisualBounds();
+    Scene scene = new Scene(root, bounds.getWidth(), bounds.getHeight());
     scenes.put(name, scene);
   }
 
