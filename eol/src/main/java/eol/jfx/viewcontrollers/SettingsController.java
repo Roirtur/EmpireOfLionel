@@ -18,7 +18,7 @@ public class SettingsController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     difficultyComboBox.setItems(
         FXCollections.observableArrayList("EASY", "MEDIUM", "HARD", "GODMOD"));
-    difficultyComboBox.setValue("EASY"); // Set default value to EASY
+    difficultyComboBox.setValue("EASY"); // Set default difficulty value to EASY
   }
 
   @FXML

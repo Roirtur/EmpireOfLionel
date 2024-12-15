@@ -72,7 +72,6 @@ public class GridMap {
 
     for (int i = x; i < x + buildingWidth; i++) {
       for (int j = y; j < y + buildingHeight; j++) {
-        // System.out.println("Removing building at " + i + ", " + j);
         grid[j][i] = false;
       }
     }

@@ -1,13 +1,12 @@
 package eol.jfx.viewcontrollers;
 
+import eol.jfx.buildings.BuildingType;
+import eol.jfx.ressources.Ressource;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import eol.jfx.buildings.BuildingType;
-import eol.jfx.ressources.Ressource;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -35,7 +34,6 @@ public class BuildingCreatorController {
     if (buildingBox == null) {
       System.err.println("buildingBox is null. Check fx:id in building.fxml.");
     } else {
-      // System.out.println("buildingBox is properly injected.");
       preloadImages();
       initializeBuildings();
     }
@@ -121,7 +119,6 @@ public class BuildingCreatorController {
       building.getStyleClass().add("building-selected");
       selectedButton = building;
     }
-    // System.out.println("Selected building: " + buildingName);
   }
 
   public static String getSelectedBuilding() { return buildingName; }
